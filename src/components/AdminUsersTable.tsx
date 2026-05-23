@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 type UserRow = {
-  id: string; username: string; role: "S" | "M" | "ADMIN"; keyBalance: number; createdAt: string;
+  id: string; username: string; role: "S" | "M" | "ADMIN"; keyBalance: number; boxCount: number; createdAt: string;
 };
 
 const badge: Record<string, { label: string; cls: string }> = {
@@ -35,6 +35,7 @@ export function AdminUsersTable(props: { initialUsers: UserRow[] }) {
             <tr>
               <th className="p-3 text-left font-semibold text-stone-600">用户名</th>
               <th className="p-3 text-left font-semibold text-stone-600">角色</th>
+              <th className="p-3 text-left font-semibold text-stone-600">宝箱</th>
               <th className="p-3 text-left font-semibold text-stone-600">钥匙</th>
               <th className="p-3 text-left font-semibold text-stone-600">操作</th>
             </tr>
@@ -83,6 +84,7 @@ function Row(props: { user: UserRow; onChanged: () => Promise<void>; onError: (m
     <tr className="border-t border-stone-100">
       <td className="p-3 font-semibold text-stone-800 whitespace-nowrap">{props.user.username}</td>
       <td className="p-3"><span className={`rounded-full px-2.5 py-1 text-sm font-medium ${b.cls}`}>{b.label}</span></td>
+      <td className="p-3 text-stone-600">{props.user.role === "S" ? props.user.boxCount : "-"}</td>
       <td className="p-3 text-stone-600">{props.user.keyBalance}</td>
       <td className="p-3">
         <div className="flex flex-wrap items-center gap-2">

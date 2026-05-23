@@ -10,9 +10,25 @@ export async function GET() {
 
   const users = await prisma.user.findMany({
     orderBy: { createdAt: "asc" },
-    select: { id: true, username: true, role: true, keyBalance: true, createdAt: true },
+    select: {
+      id: true,
+      username: true,
+      role: true,
+      keyBalance: true,
+      createdAt: true,
+      _count: { select: { sBoxes: true } },
+    },
   });
 
-  return NextResponse.json({ ok: true, users });
+  const mapped = users.map((u) => ({
+    id: u.id,
+    username: u.username,
+    role: u.role,
+    keyBalance: u.keyBalance,
+    createdAt: u.createdAt.toISOString(),
+    boxCount: u._count.sBoxes,
+  }));
+
+  return NextResponse.json({ ok: true, users: mapped });
 }
 

@@ -14,7 +14,10 @@ export default async function AdminUsersPage() {
 
   const users = await prisma.user.findMany({
     orderBy: { createdAt: "asc" },
-    select: { id: true, username: true, role: true, keyBalance: true, createdAt: true },
+    select: {
+      id: true, username: true, role: true, keyBalance: true, createdAt: true,
+      _count: { select: { sBoxes: true } },
+    },
   });
 
   return (
@@ -23,7 +26,11 @@ export default async function AdminUsersPage() {
       <main className="mx-auto max-w-3xl px-5 py-5 space-y-4">
         <h1 className="text-xl font-extrabold text-stone-800">👥 用户管理</h1>
         <AdminUsersTable
-          initialUsers={users.map((u) => ({ ...u, role: u.role as Role, createdAt: u.createdAt.toISOString() }))}
+          initialUsers={users.map((u) => ({
+            id: u.id, username: u.username, role: u.role as Role,
+            keyBalance: u.keyBalance, boxCount: u._count.sBoxes,
+            createdAt: u.createdAt.toISOString(),
+          }))}
         />
       </main>
       <BottomNav role={me.role} />

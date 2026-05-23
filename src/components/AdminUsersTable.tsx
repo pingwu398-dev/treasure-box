@@ -64,7 +64,6 @@ export function AdminUsersTable(props: { initialUsers: UserRow[] }) {
 }
 
 function Row(props: { user: UserRow; onChanged: () => Promise<void>; onError: (m: string) => void; onLocal: (p: Partial<UserRow>) => void }) {
-  const [role, setRole] = useState(props.user.role);
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [boxCount, setBoxCount] = useState("1");
@@ -102,10 +101,6 @@ function Row(props: { user: UserRow; onChanged: () => Promise<void>; onError: (m
       <td className="p-3 text-stone-600">{props.user.keyBalance}</td>
       <td className="p-3">
         <div className="flex flex-wrap items-center gap-2">
-          <select className="rounded-lg border border-stone-200 p-2 text-sm" value={role} onChange={(e) => setRole(e.target.value as any)}>
-            <option value="S">S</option><option value="M">M</option><option value="ADMIN">管理员</option>
-          </select>
-          <button className="rounded-lg bg-stone-700 px-3 py-2 text-sm font-medium text-white disabled:opacity-50" disabled={loading} onClick={async () => { setLoading(true); try { await patch({ role }); await props.onChanged(); } catch (e: any) { props.onError(e.message); } finally { setLoading(false); } }}>角色</button>
           <input className="w-20 rounded-lg border border-stone-200 p-2 text-sm" placeholder="密码" value={password} onChange={(e) => setPassword(e.target.value)} />
           <button className="rounded-lg border border-stone-300 px-3 py-2 text-sm font-medium text-stone-600 disabled:opacity-50" disabled={loading || password.length < 6} onClick={async () => { setLoading(true); try { await patch({ password }); setPassword(""); await props.onChanged(); } catch (e: any) { props.onError(e.message); } finally { setLoading(false); } }}>重置</button>
           {props.user.role === "S" && (<><input className="w-14 rounded-lg border border-stone-200 p-2 text-sm text-center" value={boxCount} onChange={(e) => setBoxCount(e.target.value)} inputMode="numeric" /><button className="rounded-lg bg-[#e69a28] px-3 py-2 text-sm font-medium text-white disabled:opacity-50" disabled={loading} onClick={async () => { setLoading(true); try { await assignBoxes(); await props.onChanged(); } catch (e: any) { props.onError(e.message); } finally { setLoading(false); } }}>+宝箱</button></>)}

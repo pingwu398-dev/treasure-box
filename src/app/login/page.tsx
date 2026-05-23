@@ -8,6 +8,7 @@ export default function LoginPage() {
   const next = params.get("next") ?? "/";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPwd, setShowPwd] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -29,13 +30,22 @@ export default function LoginPage() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-          <input
-            className="w-full rounded-2xl border border-stone-200 bg-white px-5 py-5 text-lg text-stone-800 placeholder-stone-400 outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
-            placeholder="密码"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="relative">
+            <input
+              className="w-full rounded-2xl border border-stone-200 bg-white px-5 py-5 pr-20 text-lg text-stone-800 placeholder-stone-400 outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
+              placeholder="密码"
+              type={showPwd ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button
+              type="button"
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg bg-stone-100 px-3 py-1 text-sm text-stone-500"
+              onClick={() => setShowPwd(!showPwd)}
+            >
+              {showPwd ? "隐藏" : "查看"}
+            </button>
+          </div>
           <button
             disabled={loading}
             className="w-full rounded-2xl bg-[#e69a28] py-5 text-xl font-extrabold text-white shadow-lg shadow-amber-200 active:bg-[#c47a10] disabled:opacity-50"

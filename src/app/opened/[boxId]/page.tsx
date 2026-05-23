@@ -34,7 +34,6 @@ export default async function OpenedDetailPage(props: { params: { boxId: string 
           </div>
         </div>
       </main>
-      <BottomNav role={me.role} />
     </div>
   );
 }

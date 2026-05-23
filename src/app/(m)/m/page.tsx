@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { BottomNav } from "@/components/BottomNav";
 import { SUserSearch } from "@/components/SUserSearch";
 import { Leaderboard } from "@/components/Leaderboard";
 import { getCurrentUser } from "@/lib/current-user";
@@ -12,7 +11,7 @@ export default async function MHomePage() {
   if (me.role !== ROLE.M) redirect("/");
 
   return (
-    <div className="min-h-screen pb-24">
+    <div className="min-h-screen pb-4">
       <AppHeader role={me.role} username={me.username} title="开宝箱" />
       <main className="mx-auto max-w-lg px-5 py-5 space-y-5">
         <div className="rounded-2xl bg-[#e69a28] p-6 text-center shadow-sm">
@@ -23,7 +22,6 @@ export default async function MHomePage() {
         <SUserSearch />
         <Leaderboard type="M" />
       </main>
-      <BottomNav role={me.role} />
     </div>
   );
 }

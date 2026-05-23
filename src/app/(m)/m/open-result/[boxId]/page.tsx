@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { BottomNav } from "@/components/BottomNav";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
 import { AppHeader } from "@/components/AppHeader";
@@ -21,7 +20,7 @@ export default async function OpenResultPage(props: { params: { boxId: string } 
   if (!box || box.status !== "OPENED") redirect("/m");
 
   return (
-    <div className="min-h-screen pb-24">
+    <div className="min-h-screen pb-4">
       <AppHeader role={me.role} username={me.username} title="开箱结果" />
       <main className="mx-auto max-w-lg px-5 py-5 space-y-6">
         <div className="text-center pt-8">
@@ -45,7 +44,6 @@ export default async function OpenResultPage(props: { params: { boxId: string } 
           </Link>
         </div>
       </main>
-      <BottomNav role={me.role} />
     </div>
   );
 }

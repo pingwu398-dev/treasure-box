@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { BottomNav } from "@/components/BottomNav";
 import { AdminBoxEditor } from "@/components/AdminBoxEditor";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
@@ -21,7 +20,7 @@ export default async function AdminBoxDetailPage(props: { params: { boxId: strin
   const disabled = box.status === "OPENED";
 
   return (
-    <div className="min-h-screen pb-24">
+    <div className="min-h-screen pb-4">
       <AppHeader role={me.role} username={me.username} title="宝箱详情" />
       <main className="mx-auto max-w-lg px-5 py-5 space-y-5">
         <Link href="/admin/users" className="inline-flex items-center text-lg text-stone-500">← 返回</Link>
@@ -41,7 +40,6 @@ export default async function AdminBoxDetailPage(props: { params: { boxId: strin
         <AdminBoxEditor boxId={box.id} initialContentText={box.contentText ?? ""} disabled={disabled} />
         {disabled && <div className="rounded-xl bg-amber-50 px-5 py-4 text-base text-amber-700">🔒 已开宝箱锁定不可修改</div>}
       </main>
-      <BottomNav role={me.role} />
     </div>
   );
 }

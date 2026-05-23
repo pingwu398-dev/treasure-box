@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 type Row = { id: string; username: string; value: number };
@@ -32,17 +33,24 @@ export function Leaderboard(props: { type: "S" | "M" }) {
       <h2 className="text-lg font-extrabold text-stone-800">{label}</h2>
       {loading && <p className="text-base text-stone-500">加载中…</p>}
       {!loading && list.length === 0 && <p className="text-base text-stone-500">暂无数据</p>}
-      {list.map((u, i) => (
-        <div key={u.id} className="flex items-center justify-between py-1.5 border-b border-stone-100 last:border-0">
-          <div className="flex items-center gap-3">
-            <span className="w-7 text-center text-lg">{medal(i) || i + 1}</span>
-            <span className="text-base font-semibold text-stone-800">{u.username}</span>
-          </div>
-          <span className="text-lg font-extrabold text-stone-600">
-            {props.type === "M" ? `${u.value}` : `${u.value} 个`}
-          </span>
-        </div>
-      ))}
+      {list.map((u, i) => {
+        const href = props.type === "S" ? `/m/s/${u.id}` : `/opened`;
+        return (
+          <Link
+            key={u.id}
+            href={href}
+            className="flex items-center justify-between py-1.5 border-b border-stone-100 last:border-0 hover:bg-stone-50 transition rounded-lg -mx-2 px-2"
+          >
+            <div className="flex items-center gap-3">
+              <span className="w-7 text-center text-lg">{medal(i) || i + 1}</span>
+              <span className="text-base font-semibold text-stone-800">{u.username}</span>
+            </div>
+            <span className="text-lg font-extrabold text-stone-600">
+              {props.type === "M" ? `${u.value}` : `${u.value} 个`}
+            </span>
+          </Link>
+        );
+      })}
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { BottomNav } from "@/components/BottomNav";
 import { AdminUsersTable } from "@/components/AdminUsersTable";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
@@ -33,7 +32,6 @@ export default async function AdminUsersPage() {
           }))}
         />
       </main>
-      <BottomNav role={me.role} />
     </div>
   );
 }

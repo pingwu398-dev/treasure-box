@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { BottomNav } from "@/components/BottomNav";
 import { OpenBoxList } from "@/components/OpenBoxList";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
@@ -25,7 +24,7 @@ export default async function SBoxListPage(props: { params: { sUserId: string } 
   });
 
   return (
-    <div className="min-h-screen pb-24">
+    <div className="min-h-screen pb-4">
       <AppHeader role={me.role} username={me.username} title={`${sUser.username} 的宝箱`} />
       <main className="mx-auto max-w-lg px-5 py-5">
         <Link href="/m" className="inline-flex items-center text-lg text-stone-500 mb-5">← 返回</Link>
@@ -39,7 +38,6 @@ export default async function SBoxListPage(props: { params: { sUserId: string } 
           <OpenBoxList boxes={boxes.map((b) => ({ id: b.id, createdAt: b.createdAt.toISOString() }))} />
         )}
       </main>
-      <BottomNav role={me.role} />
     </div>
   );
 }

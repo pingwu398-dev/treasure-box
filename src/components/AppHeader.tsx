@@ -22,22 +22,28 @@ export function AppHeader(props: { role: Role; username: string }) {
           ];
 
   return (
-    <header className="border-b bg-white">
-      <div className="mx-auto flex max-w-4xl items-center justify-between p-4">
-        <Link href="/" className="font-semibold">
-          Treasure Box
+    <header className="sticky top-0 z-50 border-b border-amber-200/60 bg-white/80 backdrop-blur-md">
+      <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
+        <Link href="/" className="flex items-center gap-2 font-bold text-[#5c3d1e]">
+          <span className="text-xl">&#x1F4E6;</span>
+          <span className="hidden sm:inline text-lg tracking-tight">宝箱系统</span>
         </Link>
-        <nav className="flex items-center gap-4">
+        <nav className="flex items-center gap-1 sm:gap-3">
           {links.map((l) => (
-            <Link key={l.href} href={l.href} className="text-sm underline">
+            <Link
+              key={l.href}
+              href={l.href}
+              className="rounded-lg px-2.5 py-1.5 text-sm font-medium text-[#5c4033] transition hover:bg-amber-50 hover:text-[#b8860b]"
+            >
               {l.label}
             </Link>
           ))}
-          <span className="text-sm text-zinc-600">{props.username}</span>
+          <span className="hidden sm:inline text-sm text-amber-800/70 font-medium mx-1">
+            {props.username}
+          </span>
           <LogoutButton />
         </nav>
       </div>
     </header>
   );
 }
-

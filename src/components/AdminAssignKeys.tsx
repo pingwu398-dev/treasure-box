@@ -16,11 +16,17 @@ export function AdminAssignKeys(props: { mUsers: MUser[] }) {
   const currentBalance = mUserId ? balances[mUserId] ?? 0 : 0;
 
   return (
-    <div className="space-y-4">
-      {error && <p className="text-sm text-red-600">{error}</p>}
-      <div className="rounded border p-3 space-y-3">
+    <div className="space-y-5">
+      {error && (
+        <div className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>
+      )}
+      <div className="rounded-2xl border border-amber-200/40 bg-white p-4 shadow-sm space-y-3">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-          <select className="rounded border p-2 flex-1" value={mUserId} onChange={(e) => setMUserId(e.target.value)}>
+          <select
+            className="rounded-xl border border-amber-200 bg-white px-3 py-2.5 text-sm flex-1"
+            value={mUserId}
+            onChange={(e) => setMUserId(e.target.value)}
+          >
             {props.mUsers.map((u) => (
               <option key={u.id} value={u.id}>
                 {u.username}
@@ -28,14 +34,14 @@ export function AdminAssignKeys(props: { mUsers: MUser[] }) {
             ))}
           </select>
           <input
-            className="rounded border p-2 w-full sm:w-32"
+            className="rounded-xl border border-amber-200 bg-white px-3 py-2.5 text-sm w-full sm:w-24"
             value={delta}
             onChange={(e) => setDelta(e.target.value)}
             inputMode="numeric"
             placeholder="增减"
           />
           <button
-            className="rounded bg-black px-4 py-2 text-white disabled:opacity-50"
+            className="rounded-xl bg-amber-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-amber-600 disabled:opacity-50"
             disabled={!mUserId || loading}
             onClick={async () => {
               setError(null);
@@ -60,9 +66,11 @@ export function AdminAssignKeys(props: { mUsers: MUser[] }) {
             更新钥匙
           </button>
         </div>
-        <div className="text-sm text-zinc-600">当前余额：{currentBalance}</div>
+        <div className="flex items-center gap-2 text-sm">
+          <span className="text-[#8b7355]">&#x1F511; 当前余额：</span>
+          <span className="text-xl font-extrabold text-amber-600">{currentBalance}</span>
+        </div>
       </div>
     </div>
   );
 }
-

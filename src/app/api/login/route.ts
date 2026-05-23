@@ -14,7 +14,7 @@ export async function POST(req: Request) {
   }
 
   const user = await prisma.user.findUnique({
-    where: { username: parsed.data.username },
+    where: { username: parsed.data.username.trim() },
     select: { id: true, username: true, passwordHash: true, role: true },
   });
   if (!user) return NextResponse.json({ ok: false, error: "该用户名尚未注册" }, { status: 401 });

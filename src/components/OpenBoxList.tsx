@@ -11,13 +11,26 @@ export function OpenBoxList(props: { boxes: Box[] }) {
   const [error, setError] = useState<string | null>(null);
 
   return (
-    <div className="space-y-2">
-      {error && <p className="text-sm text-red-600">{error}</p>}
+    <div className="space-y-3">
+      {error && (
+        <div className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>
+      )}
       {props.boxes.map((b, idx) => (
-        <div key={b.id} className="rounded border p-3 flex items-center justify-between gap-4">
-          <div className="font-medium">宝箱 #{idx + 1}</div>
+        <div
+          key={b.id}
+          className="flex items-center justify-between gap-3 rounded-2xl border border-amber-200/40 bg-white p-4 shadow-sm"
+        >
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-lg font-bold text-amber-600">
+              {idx + 1}
+            </span>
+            <div>
+              <div className="font-semibold text-[#5c3d1e]">宝箱 #{idx + 1}</div>
+              <div className="text-xs text-[#8b7355]">{new Date(b.createdAt).toLocaleDateString("zh-CN")}</div>
+            </div>
+          </div>
           <button
-            className="rounded bg-black px-4 py-2 text-white disabled:opacity-50"
+            className="rounded-xl bg-amber-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-amber-600 disabled:opacity-50"
             disabled={loadingId !== null}
             onClick={async () => {
               const ok = window.confirm("确认打开？将消耗 1 把钥匙");
@@ -35,11 +48,10 @@ export function OpenBoxList(props: { boxes: Box[] }) {
               }
             }}
           >
-            打开
+            {loadingId === b.id ? "开启中…" : "\u2728 打开宝箱"}
           </button>
         </div>
       ))}
     </div>
   );
 }
-

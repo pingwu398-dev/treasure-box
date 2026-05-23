@@ -3,8 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { hashPassword } from "@/lib/password";
 
 export async function GET() {
-  const username = process.env.SEED_ADMIN_USERNAME || "admin";
-  const password = process.env.SEED_ADMIN_PASSWORD || "admin12345";
+  const username = (process.env.SEED_ADMIN_USERNAME || "admin").trim();
+  const password = (process.env.SEED_ADMIN_PASSWORD || "admin12345").trim();
 
   let action = "";
   try {

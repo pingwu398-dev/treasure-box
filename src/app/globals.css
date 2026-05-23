@@ -2,11 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  height: 100%;
+:root {
+  --gold: #b8860b;
+  --gold-light: #f0c040;
+  --warm-bg: #fdf6ed;
+  --brown: #3d2b1f;
+  --brown-light: #5c4033;
+  --muted: #8b7355;
 }
 
 body {
-  @apply bg-white text-zinc-900;
+  background: linear-gradient(180deg, #fef8ec 0%, #fdf6ed 30%, #faf3e8 100%);
+  color: #3d2b1f;
+  -webkit-tap-highlight-color: transparent;
 }

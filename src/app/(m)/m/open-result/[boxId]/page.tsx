@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { AppHeader } from "@/components/AppHeader";
+import { BottomNav } from "@/components/BottomNav";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
+import { AppHeader } from "@/components/AppHeader";
 import { ROLE } from "@/lib/roles";
 
 export default async function OpenResultPage(props: { params: { boxId: string } }) {
@@ -13,48 +14,38 @@ export default async function OpenResultPage(props: { params: { boxId: string } 
   const box = await prisma.treasureBox.findUnique({
     where: { id: props.params.boxId },
     select: {
-      id: true,
-      status: true,
-      openedAt: true,
-      contentSnapshotAtOpen: true,
+      id: true, status: true, openedAt: true, contentSnapshotAtOpen: true,
       openedByMUser: { select: { username: true } },
     },
   });
   if (!box || box.status !== "OPENED") redirect("/m");
 
   return (
-    <div className="min-h-screen">
-      <AppHeader role={me.role} username={me.username} />
-      <main className="mx-auto max-w-lg px-4 py-6 space-y-5">
-        <div className="text-center">
-          <div className="text-5xl mb-3">&#x1F389;</div>
-          <h1 className="text-2xl font-bold text-[#5c3d1e]">恭喜打开宝箱！</h1>
-          <p className="mt-1 text-sm text-[#8b7355]">
-            打开者：{box.openedByMUser?.username ?? "-"}
-            &nbsp;&middot;&nbsp;
-            {box.openedAt ? box.openedAt.toLocaleString("zh-CN") : "-"}
+    <div className="min-h-screen pb-24">
+      <AppHeader role={me.role} username={me.username} title="开箱结果" />
+      <main className="mx-auto max-w-lg px-5 py-5 space-y-6">
+        <div className="text-center pt-8">
+          <div className="text-6xl mb-4">🎉</div>
+          <h1 className="text-2xl font-extrabold text-stone-800">恭喜打开宝箱！</h1>
+          <p className="mt-2 text-base text-stone-500">
+            {box.openedByMUser?.username ?? "-"} · {box.openedAt ? box.openedAt.toLocaleString("zh-CN") : "-"}
           </p>
         </div>
-        <div className="rounded-2xl border-2 border-amber-300 bg-gradient-to-b from-amber-50 to-white p-5 shadow-lg">
-          <div className="whitespace-pre-wrap text-sm leading-relaxed text-[#3d2b1f]">
+        <div className="rounded-2xl border-2 border-amber-300 bg-gradient-to-b from-amber-50 to-white p-6 shadow-lg">
+          <div className="whitespace-pre-wrap text-lg leading-relaxed text-stone-800">
             {box.contentSnapshotAtOpen ?? ""}
           </div>
         </div>
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Link
-            href="/m"
-            className="flex-1 rounded-xl border border-amber-300 py-3 text-center text-sm font-medium text-amber-700 transition hover:bg-amber-50"
-          >
+        <div className="flex flex-col gap-3">
+          <Link href="/m" className="rounded-2xl bg-[#e69a28] py-4 text-center text-lg font-bold text-white active:bg-[#c47a10]">
             继续开宝箱
           </Link>
-          <Link
-            href={`/opened/${box.id}`}
-            className="flex-1 rounded-xl bg-amber-500 py-3 text-center text-sm font-semibold text-white transition hover:bg-amber-600"
-          >
+          <Link href={`/opened/${box.id}`} className="rounded-2xl border border-stone-300 py-4 text-center text-lg font-medium text-stone-600 active:bg-stone-50">
             在已开广场查看
           </Link>
         </div>
       </main>
+      <BottomNav role={me.role} />
     </div>
   );
 }

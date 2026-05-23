@@ -3,16 +3,24 @@
 @tailwind utilities;
 
 :root {
-  --gold: #b8860b;
-  --gold-light: #f0c040;
-  --warm-bg: #fdf6ed;
-  --brown: #3d2b1f;
-  --brown-light: #5c4033;
-  --muted: #8b7355;
+  --gold: #e69a28;
+  --gold-dark: #c47a10;
+  --bg: #f8f6f2;
+  --surface: #ffffff;
+  --text: #2c2416;
+  --muted: #8b7e6a;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 body {
-  background: linear-gradient(180deg, #fef8ec 0%, #fdf6ed 30%, #faf3e8 100%);
-  color: #3d2b1f;
+  background: var(--bg);
+  color: var(--text);
   -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+input, textarea, select, button {
+  font-size: 16px;
 }

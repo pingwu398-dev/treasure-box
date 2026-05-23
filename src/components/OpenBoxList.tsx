@@ -12,44 +12,32 @@ export function OpenBoxList(props: { boxes: Box[] }) {
 
   return (
     <div className="space-y-3">
-      {error && (
-        <div className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>
-      )}
+      {error && <div className="rounded-xl bg-red-50 px-5 py-4 text-base text-red-700">{error}</div>}
       {props.boxes.map((b, idx) => (
-        <div
-          key={b.id}
-          className="flex items-center justify-between gap-3 rounded-2xl border border-amber-200/40 bg-white p-4 shadow-sm"
-        >
-          <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-lg font-bold text-amber-600">
+        <div key={b.id} className="flex items-center justify-between rounded-2xl bg-white p-5 shadow-sm border border-stone-200/60">
+          <div className="flex items-center gap-4">
+            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-50 text-2xl font-bold text-amber-600">
               {idx + 1}
             </span>
             <div>
-              <div className="font-semibold text-[#5c3d1e]">宝箱 #{idx + 1}</div>
-              <div className="text-xs text-[#8b7355]">{new Date(b.createdAt).toLocaleDateString("zh-CN")}</div>
+              <div className="text-lg font-bold text-stone-700">宝箱 #{idx + 1}</div>
+              <div className="text-sm text-stone-500">{new Date(b.createdAt).toLocaleDateString("zh-CN")}</div>
             </div>
           </div>
           <button
-            className="rounded-xl bg-amber-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-amber-600 disabled:opacity-50"
             disabled={loadingId !== null}
+            className="rounded-xl bg-[#e69a28] px-6 py-3 text-base font-bold text-white active:bg-[#c47a10] disabled:opacity-50"
             onClick={async () => {
-              const ok = window.confirm("确认打开？将消耗 1 把钥匙");
-              if (!ok) return;
-              setError(null);
-              setLoadingId(b.id);
+              if (!window.confirm("确认打开？将消耗 1 把钥匙")) return;
+              setError(null); setLoadingId(b.id);
               try {
                 const res = await fetch(`/api/m/boxes/${b.id}/open`, { method: "POST" });
                 const data = await res.json().catch(() => ({}));
                 if (!res.ok) return setError(data?.error ?? "开箱失败");
-                router.push(`/m/open-result/${b.id}`);
-                router.refresh();
-              } finally {
-                setLoadingId(null);
-              }
+                router.push(`/m/open-result/${b.id}`); router.refresh();
+              } finally { setLoadingId(null); }
             }}
-          >
-            {loadingId === b.id ? "开启中…" : "\u2728 打开宝箱"}
-          </button>
+          >{loadingId === b.id ? "开启中…" : "✨ 打开"}</button>
         </div>
       ))}
     </div>

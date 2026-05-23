@@ -18,10 +18,9 @@ export default async function TreasureEditPage(props: { params: { boxId: string 
   if (box.status === "OPENED") redirect(`/opened/${box.id}`);
 
   return (
-    <div className="min-h-screen">
-      <AppHeader role={me.role} username={me.username} />
-      <main className="mx-auto max-w-lg px-4 py-6 space-y-5">
-        <h1 className="text-2xl font-bold text-[#5c3d1e]">&#x270F; 编辑宝箱</h1>
+    <div className="min-h-screen pb-24">
+      <AppHeader role={me.role} username={me.username} title="编辑宝箱" />
+      <main className="mx-auto max-w-lg px-5 py-5">
         <BoxEditor boxId={box.id} initialContentText={box.contentText ?? ""} />
       </main>
     </div>

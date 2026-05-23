@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { AppHeader } from "@/components/AppHeader";
+import { BottomNav } from "@/components/BottomNav";
 import { OpenBoxList } from "@/components/OpenBoxList";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
+import { AppHeader } from "@/components/AppHeader";
 import { ROLE } from "@/lib/roles";
 
 export default async function SBoxListPage(props: { params: { sUserId: string } }) {
@@ -24,29 +25,21 @@ export default async function SBoxListPage(props: { params: { sUserId: string } 
   });
 
   return (
-    <div className="min-h-screen">
-      <AppHeader role={me.role} username={me.username} />
-      <main className="mx-auto max-w-lg px-4 py-6 space-y-5">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-[#5c3d1e]">{sUser.username} 的宝箱</h1>
-          <Link
-            href="/m"
-            className="rounded-xl border border-amber-300 px-4 py-2 text-sm font-medium text-amber-700 transition hover:bg-amber-50"
-          >
-            返回
-          </Link>
-        </div>
+    <div className="min-h-screen pb-24">
+      <AppHeader role={me.role} username={me.username} title={`${sUser.username} 的宝箱`} />
+      <main className="mx-auto max-w-lg px-5 py-5">
+        <Link href="/m" className="inline-flex items-center text-lg text-stone-500 mb-5">← 返回</Link>
         {boxes.length === 0 ? (
-          <div className="rounded-2xl border border-amber-200/60 bg-amber-50/50 px-5 py-10 text-center">
-            <div className="text-4xl mb-3">&#x1F4E6;</div>
-            <p className="text-sm text-amber-800">暂无可开的宝箱（可能还未填写或已被打开）。</p>
+          <div className="rounded-2xl bg-white px-6 py-12 text-center shadow-sm border border-stone-200/60">
+            <div className="text-5xl mb-4">📦</div>
+            <p className="text-lg font-medium text-stone-700">暂无可开的宝箱</p>
+            <p className="mt-2 text-base text-stone-500">可能还未填写或已被打开</p>
           </div>
         ) : (
-          <OpenBoxList
-            boxes={boxes.map((b) => ({ id: b.id, createdAt: b.createdAt.toISOString() }))}
-          />
+          <OpenBoxList boxes={boxes.map((b) => ({ id: b.id, createdAt: b.createdAt.toISOString() }))} />
         )}
       </main>
+      <BottomNav role={me.role} />
     </div>
   );
 }

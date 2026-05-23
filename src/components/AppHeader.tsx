@@ -8,14 +8,17 @@ const navLinks: Record<string, { href: string; label: string }[]> = {
   S: [
     { href: "/s", label: "📦 我的宝箱" },
     { href: "/opened", label: "🎰 已开广场" },
+    { href: "/leaderboard", label: "🏆 排行榜" },
   ],
   M: [
     { href: "/m", label: "🔑 开宝箱" },
     { href: "/opened", label: "🎰 已开广场" },
+    { href: "/leaderboard", label: "🏆 排行榜" },
   ],
   ADMIN: [
     { href: "/admin/users", label: "👥 用户管理" },
     { href: "/opened", label: "🎰 已开广场" },
+    { href: "/leaderboard", label: "🏆 排行榜" },
   ],
 };
 
@@ -45,7 +48,7 @@ export function AppHeader(props: { role: Role; username: string; title?: string 
         </div>
       </div>
       {links.length > 0 && (
-        <div className="flex items-center gap-1 px-5 pb-2.5">
+        <div className="flex items-center gap-3 px-5 pb-2.5">
           {links.map((l) => (
             <Link
               key={l.href}

@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { SUserSearch } from "@/components/SUserSearch";
-import { Leaderboard } from "@/components/Leaderboard";
 import { getCurrentUser } from "@/lib/current-user";
 import { AppHeader } from "@/components/AppHeader";
 import { ROLE } from "@/lib/roles";
@@ -20,7 +19,6 @@ export default async function MHomePage() {
           <p className="mt-1 text-sm text-amber-800/70">每开一个宝箱消耗 1 把钥匙</p>
         </div>
         <SUserSearch />
-        <Leaderboard type="M" />
       </main>
     </div>
   );

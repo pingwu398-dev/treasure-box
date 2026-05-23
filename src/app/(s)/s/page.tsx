@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Leaderboard } from "@/components/Leaderboard";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
 import { AppHeader } from "@/components/AppHeader";
@@ -60,8 +59,6 @@ export default async function SHomePage() {
             </div>
           </div>
         ))}
-
-        <Leaderboard type="S" />
       </main>
     </div>
   );

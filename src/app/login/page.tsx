@@ -51,7 +51,10 @@ export default function LoginPage() {
         </div>
 
         <div className="mt-6 text-center text-lg text-stone-500">
-          还没有账号？<a className="font-extrabold text-[#e69a28]" href="/register">立即注册</a>
+          还没有账号？
+        </div>
+        <div className="text-center">
+          <a className="font-extrabold text-[#e69a28]" href="/register">立即注册</a>
         </div>
       </div>
     </main>

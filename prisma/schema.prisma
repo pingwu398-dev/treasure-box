@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  S
+  M
+  ADMIN
+}
+
+enum BoxStatus {
+  DRAFT
+  READY
+  OPENED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String
+  role         Role
+  keyBalance   Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  sBoxes      TreasureBox[] @relation("SBoxes")
+  openedBoxes TreasureBox[] @relation("OpenedByM")
+}
+
+model TreasureBox {
+  id                    String    @id @default(cuid())
+  ownerSUserId          String
+  ownerSUser            User      @relation("SBoxes", fields: [ownerSUserId], references: [id], onDelete: Cascade)
+
+  contentText           String?
+  status                BoxStatus @default(DRAFT)
+
+  openedByMUserId       String?
+  openedByMUser         User?     @relation("OpenedByM", fields: [openedByMUserId], references: [id], onDelete: SetNull)
+  openedAt              DateTime?
+  contentSnapshotAtOpen String?
+
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([ownerSUserId])
+  @@index([status])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorUserId String?
+  action     String
+  targetType String?
+  targetId   String?
+  payload    Json?
+  createdAt  DateTime @default(now())
+}

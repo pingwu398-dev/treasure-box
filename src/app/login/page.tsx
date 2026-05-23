@@ -1,10 +1,9 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginPage() {
-  const router = useRouter();
   const params = useSearchParams();
   const next = params.get("next") ?? "/";
   const [username, setUsername] = useState("");
@@ -46,7 +45,7 @@ export default function LoginPage() {
               const data = await res.json().catch(() => ({}));
               setLoading(false);
               if (!res.ok) return setError(data?.error ?? "登录失败");
-              router.replace(next);
+              window.location.href = next;
             }}
           >{loading ? "登录中…" : "登 录"}</button>
         </div>

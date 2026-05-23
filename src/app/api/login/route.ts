@@ -17,10 +17,10 @@ export async function POST(req: Request) {
     where: { username: parsed.data.username },
     select: { id: true, username: true, passwordHash: true, role: true },
   });
-  if (!user) return NextResponse.json({ ok: false, error: "用户名或密码错误" }, { status: 401 });
+  if (!user) return NextResponse.json({ ok: false, error: "该用户名尚未注册" }, { status: 401 });
 
   const ok = await verifyPassword(parsed.data.password, user.passwordHash);
-  if (!ok) return NextResponse.json({ ok: false, error: "用户名或密码错误" }, { status: 401 });
+  if (!ok) return NextResponse.json({ ok: false, error: "密码错误" }, { status: 401 });
 
   const role = user.role as Role;
   setSession({ id: user.id, role });

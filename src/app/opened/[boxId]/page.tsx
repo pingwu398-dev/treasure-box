@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
 import { AppHeader } from "@/components/AppHeader";
-import { BottomNav } from "@/components/BottomNav";
 
 export default async function OpenedDetailPage(props: { params: { boxId: string } }) {
   const me = await getCurrentUser();
@@ -20,7 +19,7 @@ export default async function OpenedDetailPage(props: { params: { boxId: string 
   if (!box || box.status !== "OPENED") redirect("/opened");
 
   return (
-    <div className="min-h-screen pb-24">
+    <div className="min-h-screen pb-4">
       <AppHeader role={me.role} username={me.username} title="宝箱详情" />
       <main className="mx-auto max-w-lg px-5 py-5 space-y-5">
         <Link href="/opened" className="inline-flex items-center text-lg text-stone-500">← 返回广场</Link>

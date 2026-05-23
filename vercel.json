@@ -1,4 +1,4 @@
 {
-  "buildCommand": "npx prisma generate && npx prisma db push && node prisma/seed.js && next build",
+  "buildCommand": "npx prisma generate && npx prisma db push --accept-data-loss && node prisma/seed.js && next build",
   "installCommand": "npm install --registry=https://registry.npmmirror.com"
 }

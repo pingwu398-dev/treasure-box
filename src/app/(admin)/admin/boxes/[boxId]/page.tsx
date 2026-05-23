@@ -16,7 +16,7 @@ export default async function AdminBoxDetailPage(props: { params: { boxId: strin
     where: { id: props.params.boxId },
     select: { id: true, status: true, contentText: true, openedAt: true, ownerSUser: { select: { id: true, username: true } } },
   });
-  if (!box) redirect("/admin/assign-boxes");
+  if (!box) redirect("/admin/users");
 
   const disabled = box.status === "OPENED";
 

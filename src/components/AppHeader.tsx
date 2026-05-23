@@ -16,8 +16,6 @@ export function AppHeader(props: { role: Role; username: string }) {
           ]
         : [
             { href: "/admin/users", label: "用户管理" },
-            { href: "/admin/assign-boxes", label: "分配宝箱" },
-            { href: "/admin/assign-keys", label: "分配钥匙" },
             { href: "/opened", label: "已开广场" },
           ];
 

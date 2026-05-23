@@ -8,7 +8,11 @@ export async function GET() {
 
   const existing = await prisma.user.findUnique({ where: { username } });
   if (existing) {
-    return NextResponse.json({ ok: true, message: "管理员已存在" });
+    await prisma.user.update({
+      where: { username },
+      data: { passwordHash: await hashPassword(password) },
+    });
+    return NextResponse.json({ ok: true, message: `管理员 ${username} 密码已重置` });
   }
 
   await prisma.user.create({

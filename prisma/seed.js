@@ -1,12 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
-const bcrypt = require("bcryptjs");
 
 const prisma = new PrismaClient();
-
-async function hashPassword(plain) {
-  const salt = await bcrypt.genSalt(12);
-  return bcrypt.hash(plain, salt);
-}
 
 async function main() {
   const username = process.env.SEED_ADMIN_USERNAME || "admin";
@@ -18,7 +12,7 @@ async function main() {
   await prisma.user.create({
     data: {
       username,
-      passwordHash: await hashPassword(password),
+      passwordHash: password,
       role: "ADMIN",
       keyBalance: 0,
     },
@@ -32,4 +26,3 @@ main()
     await prisma.$disconnect();
     process.exit(1);
   });
-

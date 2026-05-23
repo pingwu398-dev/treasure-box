@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { BottomNav } from "@/components/BottomNav";
+import { Leaderboard } from "@/components/Leaderboard";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
 import { AppHeader } from "@/components/AppHeader";
@@ -60,6 +61,8 @@ export default async function SHomePage() {
             </div>
           </div>
         ))}
+
+        <Leaderboard type="S" />
       </main>
       <BottomNav role={me.role} />
     </div>

@@ -15,6 +15,11 @@ const badge: Record<string, { label: string; cls: string }> = {
 export function AdminUsersTable(props: { initialUsers: UserRow[] }) {
   const [users, setUsers] = useState<UserRow[]>(props.initialUsers);
   const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+
+  const filtered = search.trim()
+    ? users.filter((u) => u.username.includes(search.trim()))
+    : users;
 
   async function reload() {
     const res = await fetch("/api/admin/users");
@@ -29,6 +34,12 @@ export function AdminUsersTable(props: { initialUsers: UserRow[] }) {
   return (
     <div className="space-y-3">
       {error && <div className="rounded-xl bg-red-50 px-5 py-4 text-base text-red-700">{error}</div>}
+      <input
+        className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-lg text-stone-800 placeholder-stone-400 outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
+        placeholder="🔍 搜索用户名"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
       <div className="overflow-auto rounded-2xl border border-stone-200">
         <table className="w-full text-base">
           <thead className="bg-stone-50">
@@ -41,7 +52,10 @@ export function AdminUsersTable(props: { initialUsers: UserRow[] }) {
             </tr>
           </thead>
           <tbody>
-            {users.map((u) => <Row key={u.id} user={u} onChanged={async () => { try { setError(null); await reload(); } catch (e: any) { setError(e.message); } }} onError={(m) => setError(m)} onLocal={(p) => updateLocal(u.id, p)} />)}
+            {filtered.map((u) => <Row key={u.id} user={u} onChanged={async () => { try { setError(null); await reload(); } catch (e: any) { setError(e.message); } }} onError={(m) => setError(m)} onLocal={(p) => updateLocal(u.id, p)} />)}
+            {filtered.length === 0 && (
+              <tr><td colSpan={5} className="p-6 text-center text-stone-500">没有匹配的用户</td></tr>
+            )}
           </tbody>
         </table>
       </div>

@@ -21,26 +21,31 @@ export default async function OpenResultPage(props: { params: { boxId: string } 
   if (!box || box.status !== "OPENED") redirect("/m");
 
   return (
-    <div className="min-h-screen pb-4">
+    <div className="min-h-screen bg-[var(--bg)] pb-8">
       <AppHeader role={me.role} username={me.username} title="开箱结果" />
-      <main className="mx-auto max-w-lg px-5 py-5 space-y-6">
+      <main className="mx-auto max-w-lg px-4 py-5 space-y-6">
+        {/* Celebration */}
         <div className="text-center pt-8">
-          <div className="text-6xl mb-4">🎉</div>
-          <h1 className="text-2xl font-extrabold text-stone-800">恭喜打开宝箱！</h1>
-          <p className="mt-2 text-base text-stone-500">
+          <div className="mb-4 text-6xl animate-float">🎉</div>
+          <h1 className="text-2xl font-extrabold text-[var(--text)]">恭喜打开宝箱！</h1>
+          <p className="mt-1 text-xs text-[var(--text-muted)]">
             {box.openedByMUser?.username ?? "-"} · {box.openedAt ? <LocalTime date={box.openedAt.toISOString()} /> : "-"}
           </p>
         </div>
-        <div className="rounded-2xl border-2 border-amber-300 bg-gradient-to-b from-amber-50 to-white p-6 shadow-lg">
-          <div className="whitespace-pre-wrap text-lg leading-relaxed text-stone-800">
+
+        {/* Content card */}
+        <div className="rounded-xl bg-gradient-to-b from-amber-50 to-white p-5 shadow-sm border border-amber-200">
+          <div className="whitespace-pre-wrap text-sm leading-relaxed text-[var(--text)]">
             {box.contentSnapshotAtOpen ?? ""}
           </div>
         </div>
-        <div className="flex flex-col gap-3">
-          <Link href="/m" className="rounded-2xl bg-[#e69a28] py-4 text-center text-lg font-bold text-white active:bg-[#c47a10]">
+
+        {/* Actions */}
+        <div className="flex flex-col gap-2.5">
+          <Link href="/m" className="btn btn-primary w-full py-3.5 text-sm font-bold tracking-wide">
             继续开宝箱
           </Link>
-          <Link href={`/opened/${box.id}`} className="rounded-2xl border border-stone-300 py-4 text-center text-lg font-medium text-stone-600 active:bg-stone-50">
+          <Link href={`/opened/${box.id}`} className="btn btn-secondary w-full py-3.5 text-sm font-medium">
             在已开广场查看
           </Link>
         </div>

@@ -24,15 +24,17 @@ export default async function SBoxListPage(props: { params: { sUserId: string } 
   });
 
   return (
-    <div className="min-h-screen pb-4">
+    <div className="min-h-screen bg-[var(--bg)] pb-8">
       <AppHeader role={me.role} username={me.username} title={`${sUser.username} 的宝箱`} />
-      <main className="mx-auto max-w-lg px-5 py-5">
-        <Link href="/m" className="inline-flex items-center text-lg text-stone-500 mb-5">← 返回</Link>
+      <main className="mx-auto max-w-lg px-4 py-5">
+        <Link href="/m" className="inline-flex items-center text-sm text-[var(--text-muted)] mb-4 transition hover:text-[var(--text)]">
+          ← 返回
+        </Link>
         {boxes.length === 0 ? (
-          <div className="rounded-2xl bg-white px-6 py-12 text-center shadow-sm border border-stone-200/60">
-            <div className="text-5xl mb-4">📦</div>
-            <p className="text-lg font-medium text-stone-700">暂无可开的宝箱</p>
-            <p className="mt-2 text-base text-stone-500">可能还未填写或已被打开</p>
+          <div className="flex flex-col items-center rounded-xl bg-white px-6 py-14 text-center shadow-sm border border-[var(--border-light)]">
+            <div className="mb-3 text-5xl">📦</div>
+            <p className="text-base font-bold text-[var(--text)]">暂无可开的宝箱</p>
+            <p className="mt-1 text-xs text-[var(--text-light)]">可能还未填写或已被打开</p>
           </div>
         ) : (
           <OpenBoxList boxes={boxes.map((b) => ({ id: b.id, createdAt: b.createdAt.toISOString() }))} />

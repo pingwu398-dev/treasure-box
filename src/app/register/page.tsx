@@ -69,7 +69,7 @@ export default function RegisterPage() {
           {/* Inputs */}
           <div className="relative">
             <input
-              className="input w-full px-4 py-3 pl-[42px]"
+              className="input w-full px-4 py-5 pl-[42px]"
               placeholder="取个名字"
               value={username} onChange={(e) => setUsername(e.target.value)}
             />
@@ -77,7 +77,7 @@ export default function RegisterPage() {
           </div>
           <div className="relative">
             <input
-              className="input w-full pr-[54px]"
+              className="input w-full px-4 py-5 pr-[54px]"
               placeholder="至少6位密码"
               type={showPwd ? "text" : "password"}
               value={password} onChange={(e) => setPassword(e.target.value)}
@@ -86,7 +86,7 @@ export default function RegisterPage() {
           </div>
           <div className="relative">
             <input
-              className="input w-full pr-[54px]"
+              className="input w-full px-4 py-5 pr-[54px]"
               placeholder="再次输入密码"
               type={showPwd2 ? "text" : "password"}
               value={password2} onChange={(e) => setPassword2(e.target.value)}

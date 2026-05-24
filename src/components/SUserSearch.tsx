@@ -26,7 +26,7 @@ export function SUserSearch() {
     <div className="space-y-2.5">
       <div className="relative">
         <input
-          className="input px-4 py-3 pl-[38px] text-sm"
+          className="input px-4 py-5 pl-[38px] text-sm"
           placeholder="搜索写宝箱的人…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}

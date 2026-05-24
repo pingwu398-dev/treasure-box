@@ -35,14 +35,14 @@ export default function LoginPage() {
         {/* Form */}
         <div className="space-y-4">
           <input
-            className="input w-full"
+            className="input w-full px-4 py-5"
             placeholder="用户名"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <div className="relative">
             <input
-              className="input w-full px-4 py-3 pr-[54px]"
+              className="input w-full px-4 py-5 pr-[54px]"
               placeholder="密码"
               type={showPwd ? "text" : "password"}
               value={password}

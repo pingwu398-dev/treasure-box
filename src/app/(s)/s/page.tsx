@@ -30,7 +30,7 @@ export default async function SHomePage() {
           <span className="text-base font-semibold text-stone-600">共 {boxes.length} 个宝箱</span>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-8">
           {boxes.length === 0 && (
             <div className="rounded-2xl bg-white px-6 py-12 text-center shadow-sm border border-stone-200/60">
               <div className="text-5xl mb-4">📭</div>
@@ -41,8 +41,9 @@ export default async function SHomePage() {
 
           {boxes.map((b, idx) => {
             const content = b.status === "OPENED" ? b.contentSnapshotAtOpen : b.contentText;
+            const hasContent = content && content.trim().length > 0;
             return (
-              <div key={b.id} className="rounded-2xl bg-white p-5 shadow-sm border border-stone-200/60 space-y-4">
+              <div key={b.id} className="rounded-2xl bg-white p-5 shadow-sm border border-stone-200/60">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="text-xl font-bold text-stone-700">宝箱{idx + 1}</span>
@@ -53,19 +54,21 @@ export default async function SHomePage() {
                       <span className="text-base text-stone-500 ml-2">开启M {b.openedByMUser.username}</span>
                     )}
                   </div>
-                  {b.status !== "OPENED" && (
-                    <Link href={`/s/boxes/${b.id}`} className="rounded-xl bg-[#e69a28] px-6 py-3 text-base font-bold text-white active:bg-[#c47a10]">
-                      编辑
-                    </Link>
-                  )}
-                  {b.status === "OPENED" && (
-                    <Link href={`/opened/${b.id}`} className="rounded-xl bg-[#e69a28] px-6 py-3 text-base font-bold text-white active:bg-[#c47a10]">
-                      查看
-                    </Link>
-                  )}
-                </div>
-                <div className="border-t border-stone-100 pt-3 flex items-center gap-2 text-base text-stone-500">
-                  <span>内容详情：{content ?? ""}</span>
+                  <div className="flex items-center gap-4">
+                    {b.status !== "OPENED" && (
+                      <Link href={`/s/boxes/${b.id}`} className="rounded-xl bg-[#e69a28] px-6 py-3 text-base font-bold text-white active:bg-[#c47a10]">
+                        编辑
+                      </Link>
+                    )}
+                    {b.status === "OPENED" && (
+                      <Link href={`/opened/${b.id}`} className="rounded-xl bg-[#e69a28] px-6 py-3 text-base font-bold text-white active:bg-[#c47a10]">
+                        查看
+                      </Link>
+                    )}
+                    <span className="text-base text-stone-500">
+                      {hasContent ? `内容详情：${content}` : "无内容"}
+                    </span>
+                  </div>
                 </div>
               </div>
             );

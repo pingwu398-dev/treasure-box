@@ -12,6 +12,7 @@ const navLinks: Record<string, { href: string; label: string }[]> = {
   ],
   M: [
     { href: "/m", label: "🔑 开宝箱" },
+    { href: "/m/my-opened", label: "🔑 本人已开" },
     { href: "/opened", label: "🎰 已开广场" },
     { href: "/leaderboard", label: "🏆 排行榜" },
   ],

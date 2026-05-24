@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { AppHeader } from "@/components/AppHeader";
 
 type Box = {
   id: string; openedAt: string; contentSnapshotAtOpen: string | null;
@@ -10,10 +11,19 @@ type Box = {
 };
 
 export default function OpenedFeedPage() {
+  const [me, setMe] = useState<{ role: "S" | "M" | "ADMIN"; username: string } | null>(null);
   const [boxes, setBoxes] = useState<Box[]>([]);
   const [loading, setLoading] = useState(true);
   const [ownerQuery, setOwnerQuery] = useState("");
   const [openerQuery, setOpenerQuery] = useState("");
+
+  useEffect(() => {
+    fetch("/api/me")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d?.ok && d?.user) setMe(d.user);
+      });
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -28,13 +38,16 @@ export default function OpenedFeedPage() {
 
   return (
     <div className="min-h-screen pb-4">
-      <header className="sticky top-0 z-50 border-b border-stone-200/60 bg-[#f8f6f2]/95 backdrop-blur">
-        <div className="flex items-center justify-between px-5 py-3">
-          <Link href="/" className="text-xl font-extrabold tracking-tight text-stone-800">宝箱</Link>
-          <span className="text-base font-semibold text-stone-700">🎰 已开广场</span>
-          <button onClick={async () => { await fetch("/api/logout", { method: "POST" }); window.location.href = "/login"; }} className="text-sm text-red-500">退出</button>
-        </div>
-      </header>
+      {me && <AppHeader role={me.role} username={me.username} title="已开广场" />}
+      {!me && (
+        <header className="sticky top-0 z-50 border-b border-stone-200/60 bg-[#f8f6f2]/95 backdrop-blur">
+          <div className="flex items-center justify-between px-5 py-3">
+            <Link href="/" className="text-xl font-extrabold tracking-tight text-stone-800">宝箱</Link>
+            <span className="text-base font-semibold text-stone-700">🎰 已开广场</span>
+            <button onClick={async () => { await fetch("/api/logout", { method: "POST" }); window.location.href = "/login"; }} className="text-sm text-red-500">退出</button>
+          </div>
+        </header>
+      )}
       <main className="mx-auto max-w-lg px-5 py-5 space-y-4">
         <div className="flex gap-3">
           <input

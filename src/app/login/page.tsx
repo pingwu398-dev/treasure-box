@@ -33,16 +33,16 @@ export default function LoginPage() {
         )}
 
         {/* Form */}
-        <div className="space-y-4">
+        <div className="space-y-4 flex flex-col items-center">
           <input
-            className="input w-full px-4 py-5"
+            className="input mx-auto w-1/2 h-10 px-4"
             placeholder="用户名"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-          <div className="relative">
+          <div className="relative mx-auto w-1/2">
             <input
-              className="input w-full px-4 py-5 pr-[54px]"
+              className="input w-full h-10 px-4 pr-[54px]"
               placeholder="密码"
               type={showPwd ? "text" : "password"}
               value={password}
@@ -52,7 +52,7 @@ export default function LoginPage() {
           </div>
           <button
             disabled={loading}
-            className="btn btn-primary w-full py-4 text-base font-bold tracking-widest disabled:opacity-50"
+            className="btn btn-primary mx-auto w-1/2 h-10 text-sm font-bold tracking-widest disabled:opacity-50"
             onClick={async () => {
               setError(null); setLoading(true);
               const res = await fetch("/api/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ username, password }) });
@@ -68,7 +68,7 @@ export default function LoginPage() {
         <div className="mt-10 text-center">
           <a
             href="/register"
-            className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-white px-6 py-3 text-sm font-semibold text-[var(--text)] shadow-sm transition hover:border-[var(--gold)] hover:text-[var(--gold)] active:scale-[0.97]"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-white px-6 py-2.5 text-sm font-semibold text-[var(--text)] shadow-sm transition hover:border-[var(--gold)] hover:text-[var(--gold)] active:scale-[0.97]"
           >
             还没有账号？立即注册
             <span className="text-base">→</span>

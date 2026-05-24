@@ -25,6 +25,8 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const icon = role === "S" ? "📦" : "🔑";
+
   return (
     <main className="flex min-h-screen flex-col justify-center bg-[#f8f6f2] px-5 pb-20 pt-12">
       <div className="mx-auto w-full max-w-sm">
@@ -34,7 +36,7 @@ export default function RegisterPage() {
               role === "S" ? "bg-blue-500 shadow-blue-200" : "bg-emerald-500 shadow-emerald-200"
             }`}
           >
-            {role === "S" ? "📝" : "🔑"}
+            {icon}
           </div>
           <h1 className="text-3xl font-extrabold text-stone-800 tracking-tight">注册新账号</h1>
           <p className="mt-2 text-lg text-stone-500">选择身份，创建账号</p>
@@ -53,7 +55,7 @@ export default function RegisterPage() {
               }`}
               onClick={() => setRole("S")}
             >
-              <div className="text-2xl">📝</div>
+              <div className="text-2xl">📦</div>
               <div className="text-sm font-bold mt-1">S</div>
             </button>
             <button
@@ -69,7 +71,7 @@ export default function RegisterPage() {
             </button>
           </div>
           <div className="relative">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl">📝</span>
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl">{icon}</span>
             <input
               className="w-full rounded-2xl border border-stone-200 bg-white px-5 py-5 pl-12 text-lg text-stone-800 placeholder-stone-400 outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
               placeholder="取个名字"

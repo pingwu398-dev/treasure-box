@@ -16,6 +16,16 @@ export default function RegisterPage() {
   const icon = role === "S" ? "📦" : "🔑";
   const isS = role === "S";
 
+  const EyeBtn = (props: { showing: boolean; onClick: () => void }) => (
+    <button
+      type="button"
+      className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 text-lg opacity-50 hover:opacity-100 transition"
+      onClick={props.onClick}
+    >
+      {props.showing ? "🙈" : "👁"}
+    </button>
+  );
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-[var(--bg)] px-6">
       <div className="mx-auto w-full max-w-[340px] animate-fade-up">
@@ -76,33 +86,21 @@ export default function RegisterPage() {
           </div>
           <div className="relative">
             <input
-              className="input w-full pr-[76px]"
+              className="input w-full pr-[44px]"
               placeholder="至少6位密码"
               type={showPwd ? "text" : "password"}
               value={password} onChange={(e) => setPassword(e.target.value)}
             />
-            <button
-              type="button"
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-lg bg-[var(--bg)] px-3 py-1.5 text-xs font-medium text-[var(--text-muted)] transition hover:bg-[var(--border)]"
-              onClick={() => setShowPwd(!showPwd)}
-            >
-              {showPwd ? "隐藏" : "查看"}
-            </button>
+            <EyeBtn showing={showPwd} onClick={() => setShowPwd(!showPwd)} />
           </div>
           <div className="relative">
             <input
-              className="input w-full pr-[76px]"
+              className="input w-full pr-[44px]"
               placeholder="再次输入密码"
               type={showPwd2 ? "text" : "password"}
               value={password2} onChange={(e) => setPassword2(e.target.value)}
             />
-            <button
-              type="button"
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-lg bg-[var(--bg)] px-3 py-1.5 text-xs font-medium text-[var(--text-muted)] transition hover:bg-[var(--border)]"
-              onClick={() => setShowPwd2(!showPwd2)}
-            >
-              {showPwd2 ? "隐藏" : "查看"}
-            </button>
+            <EyeBtn showing={showPwd2} onClick={() => setShowPwd2(!showPwd2)} />
           </div>
 
           {/* Register button - large */}

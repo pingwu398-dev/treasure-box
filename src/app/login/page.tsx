@@ -41,7 +41,7 @@ export default function LoginPage() {
           />
           <div className="relative">
             <input
-              className="input w-full pr-[76px]"
+              className="input w-full pr-[44px]"
               placeholder="密码"
               type={showPwd ? "text" : "password"}
               value={password}
@@ -49,10 +49,10 @@ export default function LoginPage() {
             />
             <button
               type="button"
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-lg bg-[var(--bg)] px-3 py-1.5 text-xs font-medium text-[var(--text-muted)] transition hover:bg-[var(--border)]"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 text-lg opacity-50 hover:opacity-100 transition"
               onClick={() => setShowPwd(!showPwd)}
             >
-              {showPwd ? "隐藏" : "查看"}
+              {showPwd ? "🙈" : "👁"}
             </button>
           </div>
           <button

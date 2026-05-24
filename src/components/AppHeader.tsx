@@ -35,27 +35,26 @@ export function AppHeader(props: { role: Role; username: string; title?: string 
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border-light)] bg-[var(--bg)]/95 backdrop-blur-lg">
-      {/* Top row */}
-      <div className="mx-auto flex max-w-lg items-stretch px-4">
+      {/* Top row: logo (left), title (center), user+logout (right) */}
+      <div className="mx-auto flex max-w-lg items-center px-4 h-[48px]">
         {/* Left: Logo */}
-        <div className="flex items-center">
-          <Link href="/" className="flex h-full items-center gap-1.5 text-sm font-extrabold tracking-tight text-[var(--text)]">
-            <span className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-[var(--gold)] to-[var(--gold-dark)] text-[11px] text-white shadow-sm">📦</span>
-            <span className="hidden sm:inline">宝箱</span>
-          </Link>
-        </div>
+        <Link href="/" className="flex items-center gap-1.5 shrink-0">
+          <span className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-[var(--gold)] to-[var(--gold-dark)] text-[11px] text-white shadow-sm">📦</span>
+        </Link>
 
-        {/* Center: Title */}
-        <div className="flex flex-1 items-center justify-center">
-          <span className="text-xs font-semibold text-[var(--text-muted)]">{props.title ?? ""}</span>
+        {/* Center: Page title - big and bold */}
+        <div className="flex-1 flex items-center justify-center">
+          {props.title && (
+            <span className="text-[17px] font-extrabold tracking-tight text-[var(--text)]">{props.title}</span>
+          )}
         </div>
 
         {/* Right: Username + logout */}
-        <div className="flex items-center gap-1">
-          <span className="text-xs text-[var(--text-light)]">{props.username}</span>
+        <div className="flex items-center gap-1.5 shrink-0">
+          <span className="text-[13px] font-medium text-[var(--text-muted)]">{props.username}</span>
           <button
             onClick={logout}
-            className="touch-btn flex items-center rounded-lg px-2 text-xs font-medium text-red-400 transition hover:bg-red-50"
+            className="touch-btn flex items-center rounded-lg px-2.5 py-1 text-xs font-semibold text-red-400 transition hover:bg-red-50"
           >
             退出
           </button>

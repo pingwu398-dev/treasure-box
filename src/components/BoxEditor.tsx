@@ -9,6 +9,11 @@ export function BoxEditor(props: { boxId: string; initialContentText: string }) 
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
+  function getBoxId() {
+    const segments = window.location.pathname.split("/").filter(Boolean);
+    return segments.pop() ?? props.boxId;
+  }
+
   return (
     <div className="space-y-5">
       {error && <div className="rounded-xl bg-red-50 px-5 py-4 text-base text-red-700">{error}</div>}
@@ -25,7 +30,8 @@ export function BoxEditor(props: { boxId: string; initialContentText: string }) 
           onClick={async () => {
             setError(null); setSaving(true);
             try {
-              const res = await fetch(`/api/s/boxes/${props.boxId}`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ contentText }) });
+              const id = getBoxId();
+              const res = await fetch(`/api/s/boxes/${id}`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ contentText }) });
               const data = await res.json().catch(() => ({}));
               if (!res.ok) return setError(data?.error ?? "保存失败");
               router.replace("/s"); router.refresh();

@@ -53,9 +53,8 @@ export default function RegisterPage() {
               }`}
               onClick={() => setRole("S")}
             >
-              <div className="text-2xl mb-1">📝</div>
-              <div>写宝箱</div>
-              <div className="text-xs font-normal mt-0.5 opacity-60">S</div>
+              <div className="text-2xl">📝</div>
+              <div className="text-sm font-bold mt-1">S</div>
             </button>
             <button
               className={`flex-1 rounded-2xl py-5 text-lg font-extrabold transition-all ${
@@ -65,16 +64,18 @@ export default function RegisterPage() {
               }`}
               onClick={() => setRole("M")}
             >
-              <div className="text-2xl mb-1">🔑</div>
-              <div>开宝箱</div>
-              <div className="text-xs font-normal mt-0.5 opacity-60">M</div>
+              <div className="text-2xl">🔑</div>
+              <div className="text-sm font-bold mt-1">M</div>
             </button>
           </div>
-          <input
-            className="w-full rounded-2xl border border-stone-200 bg-white px-5 py-5 text-lg text-stone-800 placeholder-stone-400 outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
-            placeholder="取个名字（至少2个字）"
-            value={username} onChange={(e) => setUsername(e.target.value)}
-          />
+          <div className="relative">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl">📝</span>
+            <input
+              className="w-full rounded-2xl border border-stone-200 bg-white px-5 py-5 pl-12 text-lg text-stone-800 placeholder-stone-400 outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
+              placeholder="取个名字"
+              value={username} onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
           <div className="relative">
             <input
               className="w-full rounded-2xl border border-stone-200 bg-white px-5 py-5 pr-20 text-lg text-stone-800 placeholder-stone-400 outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-100"

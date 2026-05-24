@@ -53,22 +53,20 @@ export default async function SHomePage() {
                       <span className="text-base text-stone-500">开启M {b.openedByMUser.username}</span>
                     )}
                   </div>
-                  {b.status !== "OPENED" && (
-                    <Link href={`/s/boxes/${b.id}`} className="rounded-xl bg-[#e69a28] px-6 py-3 text-base font-bold text-white active:bg-[#c47a10]">
-                      编辑
-                    </Link>
-                  )}
-                  {b.status === "OPENED" && (
-                    <Link href={`/opened/${b.id}`} className="rounded-xl border border-stone-300 px-5 py-3 text-base font-medium text-stone-600 active:bg-stone-50">
-                      查看
-                    </Link>
-                  )}
-                </div>
-                {content && (
-                  <div className="whitespace-pre-wrap text-base leading-relaxed text-stone-700 border-t border-stone-100 pt-3">
-                    {content}
+                  <div className="flex items-center gap-4">
+                    {b.status !== "OPENED" && (
+                      <Link href={`/s/boxes/${b.id}`} className="rounded-xl bg-[#e69a28] px-6 py-3 text-base font-bold text-white active:bg-[#c47a10]">
+                        编辑
+                      </Link>
+                    )}
+                    {b.status === "OPENED" && (
+                      <Link href={`/opened/${b.id}`} className="rounded-xl bg-[#e69a28] px-6 py-3 text-base font-bold text-white active:bg-[#c47a10]">
+                        查看
+                      </Link>
+                    )}
+                    <span className="text-base text-stone-500">内容详情：{content ?? ""}</span>
                   </div>
-                )}
+                </div>
               </div>
             );
           })}

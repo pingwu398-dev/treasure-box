@@ -5,13 +5,6 @@ import { prisma } from "@/lib/prisma";
 import { AppHeader } from "@/components/AppHeader";
 import { ROLE } from "@/lib/roles";
 
-const statusInfo = (status: string, hasContent: boolean) => {
-  if (status === "OPENED") return { label: "已开启", cls: "bg-slate-100 text-slate-600", text: "宝箱已打开" };
-  if (status === "READY") return { label: "待开启", cls: "bg-emerald-50 text-emerald-700", text: "宝箱已填写" };
-  if (hasContent) return { label: "草稿", cls: "bg-amber-50 text-amber-700", text: "宝箱已填写" };
-  return { label: "草稿", cls: "bg-stone-100 text-stone-600", text: "宝箱未被填写" };
-};
-
 export default async function SHomePage() {
   const me = await getCurrentUser();
   if (!me) redirect("/login");
@@ -20,7 +13,13 @@ export default async function SHomePage() {
   const boxes = await prisma.treasureBox.findMany({
     where: { ownerSUserId: me.id },
     orderBy: { createdAt: "asc" },
-    select: { id: true, status: true, contentText: true },
+    select: {
+      id: true,
+      status: true,
+      contentText: true,
+      contentSnapshotAtOpen: true,
+      openedByMUser: { select: { username: true } },
+    },
   });
 
   return (
@@ -41,13 +40,18 @@ export default async function SHomePage() {
           )}
 
           {boxes.map((b, idx) => {
-            const info = statusInfo(b.status, !!b.contentText);
+            const content = b.status === "OPENED" ? b.contentSnapshotAtOpen : b.contentText;
             return (
-              <div key={b.id} className="rounded-2xl bg-white p-5 shadow-sm border border-stone-200/60">
+              <div key={b.id} className="rounded-2xl bg-white p-5 shadow-sm border border-stone-200/60 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <span className="text-xl font-bold text-stone-700">宝箱{idx + 1}</span>
-                    <span className={`rounded-full px-3 py-1 text-sm font-medium ${info.cls}`}>{info.label}</span>
+                    <span className={`rounded-full px-3 py-1 text-sm font-medium ${b.status === "OPENED" ? "bg-slate-100 text-slate-600" : b.status === "READY" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>
+                      {b.status === "OPENED" ? "已开启" : b.status === "READY" ? "待开启" : "未填写"}
+                    </span>
+                    {b.status === "OPENED" && b.openedByMUser?.username && (
+                      <span className="text-base text-stone-500">开启M {b.openedByMUser.username}</span>
+                    )}
                   </div>
                   {b.status !== "OPENED" && (
                     <Link href={`/s/boxes/${b.id}`} className="rounded-xl bg-[#e69a28] px-6 py-3 text-base font-bold text-white active:bg-[#c47a10]">
@@ -60,6 +64,11 @@ export default async function SHomePage() {
                     </Link>
                   )}
                 </div>
+                {content && (
+                  <div className="whitespace-pre-wrap text-base leading-relaxed text-stone-700 border-t border-stone-100 pt-3">
+                    {content}
+                  </div>
+                )}
               </div>
             );
           })}

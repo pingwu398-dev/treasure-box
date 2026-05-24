@@ -33,7 +33,7 @@ export default function LoginPage() {
         )}
 
         {/* Form */}
-        <div className="space-y-3.5">
+        <div className="space-y-4">
           <input
             className="input w-full"
             placeholder="用户名"
@@ -42,7 +42,7 @@ export default function LoginPage() {
           />
           <div className="relative">
             <input
-              className="input w-full pr-[44px]"
+              className="input w-full pr-[54px]"
               placeholder="密码"
               type={showPwd ? "text" : "password"}
               value={password}
@@ -52,7 +52,7 @@ export default function LoginPage() {
           </div>
           <button
             disabled={loading}
-            className="btn btn-primary w-full py-[14px] text-base font-bold tracking-wider disabled:opacity-50"
+            className="btn btn-primary w-full py-4 text-base font-bold tracking-widest disabled:opacity-50"
             onClick={async () => {
               setError(null); setLoading(true);
               const res = await fetch("/api/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ username, password }) });
@@ -65,10 +65,10 @@ export default function LoginPage() {
         </div>
 
         {/* Register link - pill style */}
-        <div className="mt-11 text-center">
+        <div className="mt-10 text-center">
           <a
             href="/register"
-            className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-white px-6 py-2.5 text-sm font-semibold text-[var(--text)] shadow-sm transition hover:border-[var(--gold)] hover:text-[var(--gold)] active:scale-[0.97]"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-white px-6 py-3 text-sm font-semibold text-[var(--text)] shadow-sm transition hover:border-[var(--gold)] hover:text-[var(--gold)] active:scale-[0.97]"
           >
             还没有账号？立即注册
             <span className="text-base">→</span>

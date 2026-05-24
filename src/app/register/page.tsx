@@ -37,11 +37,11 @@ export default function RegisterPage() {
         {error && <div className="mb-4 animate-scale-in rounded-xl bg-red-50 px-4 py-3 text-center text-sm font-medium text-red-500">{error}</div>}
         {result && <div className="mb-4 animate-scale-in rounded-xl bg-emerald-50 px-4 py-3 text-center text-sm font-medium text-green-600">{result}</div>}
 
-        <div className="space-y-3.5">
+        <div className="space-y-4">
           {/* Role selector */}
           <div className="flex gap-3">
             <button
-              className={`flex flex-1 flex-col items-center gap-0.5 rounded-2xl py-3.5 text-sm font-bold transition-all ${
+              className={`flex flex-1 flex-col items-center gap-0.5 rounded-2xl py-4 text-sm font-bold transition-all ${
                 isS
                   ? "scale-[1.02] border-2 border-blue-400 bg-blue-50 text-blue-700 shadow-sm"
                   : "border border-[var(--border)] bg-white text-[var(--text-light)] hover:bg-[var(--bg)] active:scale-[0.98]"
@@ -53,7 +53,7 @@ export default function RegisterPage() {
               <span className="text-[10px] opacity-50">S</span>
             </button>
             <button
-              className={`flex flex-1 flex-col items-center gap-0.5 rounded-2xl py-3.5 text-sm font-bold transition-all ${
+              className={`flex flex-1 flex-col items-center gap-0.5 rounded-2xl py-4 text-sm font-bold transition-all ${
                 !isS
                   ? "scale-[1.02] border-2 border-emerald-400 bg-emerald-50 text-emerald-700 shadow-sm"
                   : "border border-[var(--border)] bg-white text-[var(--text-light)] hover:bg-[var(--bg)] active:scale-[0.98]"
@@ -77,7 +77,7 @@ export default function RegisterPage() {
           </div>
           <div className="relative">
             <input
-              className="input w-full pr-[44px]"
+              className="input w-full pr-[54px]"
               placeholder="至少6位密码"
               type={showPwd ? "text" : "password"}
               value={password} onChange={(e) => setPassword(e.target.value)}
@@ -86,7 +86,7 @@ export default function RegisterPage() {
           </div>
           <div className="relative">
             <input
-              className="input w-full pr-[44px]"
+              className="input w-full pr-[54px]"
               placeholder="再次输入密码"
               type={showPwd2 ? "text" : "password"}
               value={password2} onChange={(e) => setPassword2(e.target.value)}
@@ -97,7 +97,7 @@ export default function RegisterPage() {
           {/* Register button */}
           <button
             disabled={loading}
-            className={`btn w-full rounded-xl py-[14px] text-base font-bold tracking-wider disabled:opacity-50 ${
+            className={`btn w-full rounded-xl py-4 text-base font-bold tracking-widest disabled:opacity-50 ${
               isS
                 ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-md shadow-blue-200"
                 : "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-200"
@@ -117,10 +117,10 @@ export default function RegisterPage() {
         </div>
 
         {/* Login link */}
-        <div className="mt-11 text-center">
+        <div className="mt-10 text-center">
           <a
             href="/login"
-            className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-white px-6 py-2.5 text-sm font-semibold text-[var(--text)] shadow-sm transition hover:border-[var(--gold)] hover:text-[var(--gold)] active:scale-[0.97]"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-white px-6 py-3 text-sm font-semibold text-[var(--text)] shadow-sm transition hover:border-[var(--gold)] hover:text-[var(--gold)] active:scale-[0.97]"
           >
             已有账号？去登录
             <span className="text-base">→</span>

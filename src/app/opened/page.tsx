@@ -37,47 +37,50 @@ export default function OpenedFeedPage() {
       {me && <AppHeader role={me.role} username={me.username} title="已开广场" />}
       {!me && (
         <header className="sticky top-0 z-50 border-b border-[var(--border-light)] bg-[var(--bg)]/95 backdrop-blur-lg">
-          <div className="mx-auto flex max-w-lg items-center justify-between px-5 py-3">
-            <span className="text-lg font-extrabold tracking-tight text-[var(--text)]">🎰 已开广场</span>
-            <button onClick={async () => { await fetch("/api/logout", { method: "POST" }); window.location.href = "/login"; }} className="text-sm font-medium text-red-400">退出</button>
+          <div className="mx-auto flex max-w-lg items-center justify-between px-4 py-2.5">
+            <span className="text-sm font-extrabold text-[var(--text)]">🎰 已开广场</span>
+            <button onClick={async () => { await fetch("/api/logout", { method: "POST" }); window.location.href = "/login"; }} className="text-xs font-medium text-red-400">退出</button>
           </div>
         </header>
       )}
-      <main className="mx-auto max-w-lg px-5 py-6 space-y-4">
-        <div className="flex gap-3">
+      <main className="mx-auto max-w-lg px-4 py-5 space-y-4">
+        {/* Search */}
+        <div className="flex gap-2">
           <input
-            className="flex-1 rounded-2xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--text)] placeholder-[var(--text-light)] outline-none transition focus:border-[var(--gold)] focus:ring-4 focus:ring-[var(--gold-glow)]"
+            className="input flex-1 text-sm"
             placeholder="🔍 S 用户名"
             value={ownerQuery}
             onChange={(e) => setOwnerQuery(e.target.value)}
           />
           <input
-            className="flex-1 rounded-2xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--text)] placeholder-[var(--text-light)] outline-none transition focus:border-[var(--gold)] focus:ring-4 focus:ring-[var(--gold-glow)]"
+            className="input flex-1 text-sm"
             placeholder="🔑 M 用户名"
             value={openerQuery}
             onChange={(e) => setOpenerQuery(e.target.value)}
           />
         </div>
-        {loading && <div className="flex items-center justify-center py-10 text-sm text-[var(--text-muted)]">加载中…</div>}
+
+        {/* List */}
+        {loading && <div className="flex items-center justify-center py-10 text-xs text-[var(--text-light)]">加载中…</div>}
         {!loading && boxes.length === 0 && (
-          <div className="flex flex-col items-center rounded-3xl bg-white px-6 py-16 text-center shadow-sm border border-[var(--border-light)]">
-            <div className="mb-4 text-6xl">📭</div>
-            <p className="text-lg font-bold text-[var(--text)]">暂无已开宝箱</p>
+          <div className="flex flex-col items-center rounded-xl bg-white px-6 py-14 text-center shadow-sm border border-[var(--border-light)]">
+            <div className="mb-3 text-5xl">📭</div>
+            <p className="text-sm font-bold text-[var(--text)]">暂无已开宝箱</p>
           </div>
         )}
-        {boxes.map((b, i) => (
-          <Link key={b.id} href={`/opened/${b.id}`} className={`block rounded-2xl bg-white p-5 shadow-sm border border-[var(--border-light)] transition hover:shadow-md hover:border-[var(--border)] animate-fade-up stagger-${Math.min(i + 1, 6)}`}>
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-base font-bold text-[var(--text)]">{b.ownerSUser?.username ?? "-"} 的宝箱</div>
-                <div className="mt-1 text-sm text-[var(--text-muted)]">
+        <div className="space-y-2.5">
+          {boxes.map((b, i) => (
+            <Link key={b.id} href={`/opened/${b.id}`} className={`flex items-center justify-between rounded-xl bg-white p-3.5 shadow-sm border border-[var(--border-light)] transition hover:shadow-md active:scale-[0.99] animate-fade-up stagger-${Math.min(i + 1, 6)}`}>
+              <div className="min-w-0">
+                <div className="text-sm font-semibold text-[var(--text)]">{b.ownerSUser?.username ?? "-"} 的宝箱</div>
+                <div className="mt-0.5 text-[11px] text-[var(--text-light)]">
                   由 {b.openedByMUser?.username ?? "-"} 打开
                 </div>
               </div>
-              <span className="text-lg text-[var(--gold)]">➤</span>
-            </div>
-          </Link>
-        ))}
+              <span className="text-base text-[var(--text-faint)] shrink-0 ml-2">›</span>
+            </Link>
+          ))}
+        </div>
       </main>
     </div>
   );

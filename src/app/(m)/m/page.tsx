@@ -12,14 +12,20 @@ export default async function MHomePage() {
   return (
     <div className="min-h-screen bg-[var(--bg)] pb-8">
       <AppHeader role={me.role} username={me.username} title="开宝箱" />
-      <main className="mx-auto max-w-lg px-5 py-6 space-y-6">
-        <div className="animate-scale-in rounded-2xl bg-gradient-to-br from-[var(--gold)] via-[var(--gold-light)] to-[var(--gold)] p-6 shadow-sm border border-[var(--gold)]/20">
-          <div className="flex items-baseline justify-center gap-2">
-            <span className="text-base font-semibold text-amber-900/80">剩余钥匙</span>
-            <span className="text-5xl font-extrabold tracking-tight text-white">{me.keyBalance}</span>
+      <main className="mx-auto max-w-lg px-4 py-5 space-y-5">
+        {/* Key balance - prominent, actionable */}
+        <div className="animate-scale-in rounded-xl bg-gradient-to-br from-[var(--gold)] to-[var(--gold-dark)] p-5 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-semibold text-amber-100/80">我的钥匙</p>
+              <p className="mt-0.5 text-3xl font-extrabold text-white">{me.keyBalance}</p>
+            </div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/15 text-2xl">🔑</div>
           </div>
-          <p className="mt-2 text-center text-xs text-amber-800/50">每开一个宝箱消耗 1 把钥匙</p>
+          <p className="mt-2 text-[11px] text-amber-200/60">每开一个宝箱消耗 1 把钥匙</p>
         </div>
+
+        {/* Search */}
         <SUserSearch />
       </main>
     </div>

@@ -13,32 +13,35 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-[var(--bg)] px-5 pb-20 pt-12">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-[var(--bg)] px-5 pb-16">
       <div className="mx-auto w-full max-w-sm animate-fade-up">
-        <div className="mb-10 text-center">
-          <div className="mx-auto mb-5 flex h-20 w-20 animate-float items-center justify-center rounded-[22px] bg-gradient-to-br from-[var(--gold)] to-[var(--gold-dark)] text-4xl shadow-lg shadow-[var(--gold-glow)]">
+        {/* Logo area */}
+        <div className="mb-8 flex flex-col items-center">
+          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--gold)] to-[var(--gold-dark)] text-3xl shadow-lg shadow-[var(--gold-glow)]">
             📦
           </div>
-          <h1 className="text-[28px] font-extrabold tracking-tight text-[var(--text)]">欢迎回来</h1>
-          <p className="mt-2 text-base text-[var(--text-muted)]">登录你的宝箱账号</p>
+          <h1 className="text-2xl font-extrabold tracking-tight text-[var(--text)]">宝箱系统</h1>
+          <p className="mt-1 text-sm text-[var(--text-light)]">登录你的账号</p>
         </div>
 
+        {/* Error */}
         {error && (
-          <div className="mb-5 animate-scale-in rounded-2xl bg-red-50 px-5 py-4 text-center text-base font-medium text-red-600">
+          <div className="mb-4 animate-scale-in rounded-xl bg-red-50 px-4 py-3 text-center text-sm font-medium text-red-500">
             {error}
           </div>
         )}
 
-        <div className="space-y-3.5">
+        {/* Form */}
+        <div className="space-y-3">
           <input
-            className="w-full rounded-2xl border border-[var(--border)] bg-white px-5 py-4 text-base text-[var(--text)] placeholder-[var(--text-light)] outline-none transition focus:border-[var(--gold)] focus:ring-4 focus:ring-[var(--gold-glow)]"
+            className="input"
             placeholder="用户名"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <div className="relative">
             <input
-              className="w-full rounded-2xl border border-[var(--border)] bg-white px-5 py-4 pr-20 text-base text-[var(--text)] placeholder-[var(--text-light)] outline-none transition focus:border-[var(--gold)] focus:ring-4 focus:ring-[var(--gold-glow)]"
+              className="input pr-[72px]"
               placeholder="密码"
               type={showPwd ? "text" : "password"}
               value={password}
@@ -46,7 +49,7 @@ export default function LoginPage() {
             />
             <button
               type="button"
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-xl bg-[var(--bg)] px-3 py-1.5 text-sm font-medium text-[var(--text-muted)] transition hover:bg-[var(--border)]"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-lg bg-[var(--bg)] px-2.5 py-1.5 text-xs font-medium text-[var(--text-light)] transition hover:bg-[var(--border)]"
               onClick={() => setShowPwd(!showPwd)}
             >
               {showPwd ? "隐藏" : "查看"}
@@ -54,7 +57,7 @@ export default function LoginPage() {
           </div>
           <button
             disabled={loading}
-            className="btn-gold w-full py-4 text-lg tracking-wide disabled:opacity-50"
+            className="btn btn-primary w-full py-3.5 text-[15px] disabled:opacity-50"
             onClick={async () => {
               setError(null); setLoading(true);
               const res = await fetch("/api/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ username, password }) });
@@ -66,11 +69,10 @@ export default function LoginPage() {
           >{loading ? "登录中…" : "登 录"}</button>
         </div>
 
-        <div className="mt-8 text-center text-base text-[var(--text-muted)]">
-          还没有账号？
-        </div>
-        <div className="mt-1.5 text-center">
-          <a className="text-base font-bold text-[var(--gold)] transition hover:text-[var(--gold-dark)]" href="/register">立即注册 →</a>
+        {/* Register link */}
+        <div className="mt-8 text-center">
+          <span className="text-sm text-[var(--text-light)]">还没有账号？</span>
+          <a className="ml-1 text-sm font-bold text-[var(--gold)] hover:text-[var(--gold-dark)]" href="/register">立即注册</a>
         </div>
       </div>
     </main>

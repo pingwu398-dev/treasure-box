@@ -10,7 +10,7 @@ export function OpenBoxList(props: { boxes: Box[] }) {
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const action = async (b: Box) => {
+  const handleOpen = async (b: Box) => {
     setError(null); setLoadingId(b.id);
     try {
       const res = await fetch(`/api/m/boxes/${b.id}/open`, { method: "POST" });
@@ -21,18 +21,23 @@ export function OpenBoxList(props: { boxes: Box[] }) {
   };
 
   return (
-    <div className="space-y-3">
-      {error && <div className="rounded-2xl bg-red-50 px-5 py-4 text-center text-sm font-medium text-red-600">{error}</div>}
+    <div className="space-y-2.5">
+      {error && <div className="rounded-xl bg-red-50 px-4 py-3 text-center text-xs font-medium text-red-500">{error}</div>}
       {props.boxes.map((b, idx) => (
-        <div key={b.id} className={`flex items-center justify-between rounded-2xl bg-white p-4 shadow-sm border border-[var(--border-light)] animate-fade-up stagger-${Math.min(idx + 1, 6)}`}>
-          <span className="text-base font-bold text-[var(--text)]">
-            {idx + 1} 宝箱  {new Date(b.createdAt).toLocaleDateString("zh-CN")}
-          </span>
+        <div key={b.id} className={`flex items-center justify-between rounded-xl bg-white p-3.5 shadow-sm border border-[var(--border-light)] animate-fade-up stagger-${Math.min(idx + 1, 6)}`}>
+          <div className="min-w-0">
+            <span className="text-sm font-semibold text-[var(--text)]">
+              #{idx + 1} 宝箱
+            </span>
+            <span className="ml-2 text-[11px] text-[var(--text-light)]">
+              {new Date(b.createdAt).toLocaleDateString("zh-CN")}
+            </span>
+          </div>
           <button
             disabled={loadingId !== null}
-            className="btn-gold rounded-xl px-5 py-2.5 text-sm disabled:opacity-50"
-            onClick={() => action(b)}
-          >{loadingId === b.id ? "开启中…" : "✨ 打开"}</button>
+            className="btn btn-primary touch-btn shrink-0 rounded-xl px-4 py-2 text-xs disabled:opacity-50"
+            onClick={() => handleOpen(b)}
+          >{loadingId === b.id ? "…" : "✨ 打开"}</button>
         </div>
       ))}
     </div>

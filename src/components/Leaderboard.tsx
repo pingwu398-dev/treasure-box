@@ -22,20 +22,20 @@ export function Leaderboard(props: { type: "S" | "M" }) {
       .finally(() => setLoading(false));
   }, [props.type]);
 
-  const medal = (i: number) => i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : "";
-  const label = props.type === "M" ? "🔑 累计钥匙排行" : "📦 宝箱排行";
+  const badge = (i: number) => i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : "";
+  const label = props.type === "M" ? "🔑 累计钥匙" : "📦 宝箱";
 
   return (
-    <div className="rounded-2xl bg-white p-5 shadow-sm border border-[var(--border-light)]">
-      <h2 className="mb-4 text-base font-extrabold text-[var(--text)]">{label}</h2>
-      {loading && <div className="flex items-center justify-center py-6 text-sm text-[var(--text-muted)]">加载中…</div>}
-      {!loading && list.length === 0 && <div className="flex items-center justify-center py-6 text-sm text-[var(--text-muted)]">暂无数据</div>}
+    <div className="rounded-xl bg-white p-4 shadow-sm border border-[var(--border-light)]">
+      <h2 className="mb-3 text-sm font-bold text-[var(--text)]">{label}</h2>
+      {loading && <div className="flex items-center justify-center py-6 text-xs text-[var(--text-light)]">加载中…</div>}
+      {!loading && list.length === 0 && <div className="flex items-center justify-center py-6 text-xs text-[var(--text-light)]">暂无数据</div>}
       <div className="space-y-1">
         {list.map((u, i) => (
-          <div key={u.id} className={`flex items-center rounded-xl py-2.5 px-2 transition hover:bg-[var(--bg)] animate-fade-up stagger-${Math.min(i + 1, 6)}`}>
-            <span className="flex w-8 items-center justify-center text-base font-bold text-[var(--text-muted)]">{medal(i) || i + 1}</span>
-            <span className="flex-1 text-sm font-bold text-[var(--text)]">{u.username}</span>
-            <span className="text-base font-extrabold text-[var(--gold)]">
+          <div key={u.id} className={`flex items-center rounded-lg px-2 py-2 transition hover:bg-[var(--bg)] animate-fade-up stagger-${Math.min(i + 1, 6)}`}>
+            <span className="flex w-7 items-center justify-center text-xs font-bold text-[var(--text-muted)]">{badge(i) || i + 1}</span>
+            <span className="flex-1 text-xs font-semibold text-[var(--text)]">{u.username}</span>
+            <span className="text-xs font-extrabold text-[var(--gold)]">
               {props.type === "M" ? `${u.value}` : `${u.value} 个`}
             </span>
           </div>

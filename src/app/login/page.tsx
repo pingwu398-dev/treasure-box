@@ -42,7 +42,7 @@ export default function LoginPage() {
           />
           <div className="relative">
             <input
-              className="input w-full pr-[54px]"
+              className="input w-full px-4 py-3 pr-[54px]"
               placeholder="密码"
               type={showPwd ? "text" : "password"}
               value={password}

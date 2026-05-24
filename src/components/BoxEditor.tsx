@@ -29,7 +29,7 @@ export function BoxEditor(props: { boxId: string; initialContentText: string }) 
       {error && <div className="animate-scale-in rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-500">{error}</div>}
       <div className="relative">
         <textarea
-          className="input min-h-[280px] resize-none leading-relaxed"
+          className="input p-4 min-h-[280px] resize-none leading-relaxed"
           placeholder="在这里写下宝箱里的秘密…"
           value={contentText}
           onChange={(e) => { setContentText(e.target.value); setDirty(true); }}

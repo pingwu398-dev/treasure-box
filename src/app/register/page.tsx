@@ -69,7 +69,7 @@ export default function RegisterPage() {
           {/* Inputs */}
           <div className="relative">
             <input
-              className="input w-full pl-[42px]"
+              className="input w-full px-4 py-3 pl-[42px]"
               placeholder="取个名字"
               value={username} onChange={(e) => setUsername(e.target.value)}
             />

@@ -13,15 +13,15 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-[var(--bg)] px-5 pb-16">
-      <div className="mx-auto w-full max-w-sm animate-fade-up">
-        {/* Logo area */}
+    <main className="flex min-h-screen flex-col items-center justify-center bg-[var(--bg)] px-6">
+      <div className="mx-auto w-full max-w-[340px] animate-fade-up">
+        {/* Logo */}
         <div className="mb-8 flex flex-col items-center">
-          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--gold)] to-[var(--gold-dark)] text-3xl shadow-lg shadow-[var(--gold-glow)]">
+          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--gold)] to-[var(--gold-dark)] text-2xl shadow-lg shadow-[var(--gold-glow)]">
             📦
           </div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-[var(--text)]">宝箱系统</h1>
-          <p className="mt-1 text-sm text-[var(--text-light)]">登录你的账号</p>
+          <h1 className="text-xl font-extrabold tracking-tight text-[var(--text)]">宝箱系统</h1>
+          <p className="mt-0.5 text-sm text-[var(--text-light)]">登录你的账号</p>
         </div>
 
         {/* Error */}
@@ -32,16 +32,16 @@ export default function LoginPage() {
         )}
 
         {/* Form */}
-        <div className="space-y-3">
+        <div className="space-y-3.5">
           <input
-            className="input"
+            className="input w-full"
             placeholder="用户名"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <div className="relative">
             <input
-              className="input pr-[72px]"
+              className="input w-full pr-[76px]"
               placeholder="密码"
               type={showPwd ? "text" : "password"}
               value={password}
@@ -49,7 +49,7 @@ export default function LoginPage() {
             />
             <button
               type="button"
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-lg bg-[var(--bg)] px-2.5 py-1.5 text-xs font-medium text-[var(--text-light)] transition hover:bg-[var(--border)]"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-lg bg-[var(--bg)] px-3 py-1.5 text-xs font-medium text-[var(--text-muted)] transition hover:bg-[var(--border)]"
               onClick={() => setShowPwd(!showPwd)}
             >
               {showPwd ? "隐藏" : "查看"}
@@ -57,7 +57,7 @@ export default function LoginPage() {
           </div>
           <button
             disabled={loading}
-            className="btn btn-primary w-full py-3.5 text-[15px] disabled:opacity-50"
+            className="btn btn-primary w-full py-[14px] text-base font-bold tracking-wider disabled:opacity-50"
             onClick={async () => {
               setError(null); setLoading(true);
               const res = await fetch("/api/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ username, password }) });
@@ -69,10 +69,15 @@ export default function LoginPage() {
           >{loading ? "登录中…" : "登 录"}</button>
         </div>
 
-        {/* Register link */}
-        <div className="mt-8 text-center">
-          <span className="text-sm text-[var(--text-light)]">还没有账号？</span>
-          <a className="ml-1 text-sm font-bold text-[var(--gold)] hover:text-[var(--gold-dark)]" href="/register">立即注册</a>
+        {/* Register link - pill style */}
+        <div className="mt-11 text-center">
+          <a
+            href="/register"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-white px-6 py-2.5 text-sm font-semibold text-[var(--text)] shadow-sm transition hover:border-[var(--gold)] hover:text-[var(--gold)] active:scale-[0.97]"
+          >
+            还没有账号？立即注册
+            <span className="text-base">→</span>
+          </a>
         </div>
       </div>
     </main>

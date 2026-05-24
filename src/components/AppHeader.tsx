@@ -35,16 +35,34 @@ export function AppHeader(props: { role: Role; username: string; title?: string 
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border-light)] bg-[var(--bg)]/95 backdrop-blur-lg">
-      <div className="mx-auto flex max-w-lg items-center justify-between px-4 py-2.5">
-        <Link href="/" className="flex items-center gap-1.5 text-[15px] font-extrabold tracking-tight text-[var(--text)]">
-          <span className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-[var(--gold)] to-[var(--gold-dark)] text-[11px] text-white shadow-sm">📦</span>
-        </Link>
-        <span className="text-xs font-semibold text-[var(--text-muted)]">{props.title ?? ""}</span>
-        <div className="flex items-center gap-1.5">
+      {/* Top row */}
+      <div className="mx-auto flex max-w-lg items-stretch px-4">
+        {/* Left: Logo */}
+        <div className="flex items-center">
+          <Link href="/" className="flex h-full items-center gap-1.5 text-sm font-extrabold tracking-tight text-[var(--text)]">
+            <span className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-[var(--gold)] to-[var(--gold-dark)] text-[11px] text-white shadow-sm">📦</span>
+            <span className="hidden sm:inline">宝箱</span>
+          </Link>
+        </div>
+
+        {/* Center: Title */}
+        <div className="flex flex-1 items-center justify-center">
+          <span className="text-xs font-semibold text-[var(--text-muted)]">{props.title ?? ""}</span>
+        </div>
+
+        {/* Right: Username + logout */}
+        <div className="flex items-center gap-1">
           <span className="text-xs text-[var(--text-light)]">{props.username}</span>
-          <button onClick={logout} className="touch-btn rounded-lg px-2 text-xs font-medium text-red-400 transition hover:bg-red-50">退出</button>
+          <button
+            onClick={logout}
+            className="touch-btn flex items-center rounded-lg px-2 text-xs font-medium text-red-400 transition hover:bg-red-50"
+          >
+            退出
+          </button>
         </div>
       </div>
+
+      {/* Nav bar */}
       {links.length > 0 && (
         <div className="flex items-center gap-0.5 overflow-x-auto border-t border-[var(--border-light)] px-3 pb-1.5 pt-1.5 scrollbar-none">
           {links.map((l) => {

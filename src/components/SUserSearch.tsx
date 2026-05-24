@@ -41,11 +41,11 @@ export function SUserSearch() {
           </div>
         )}
         {items.map((u, i) => (
-          <div key={u.id} className={`flex items-center justify-between rounded-xl bg-white p-3.5 shadow-sm border border-[var(--border-light)] animate-fade-up stagger-${Math.min(i + 1, 6)}`}>
+          <div key={u.id} className={`flex items-center justify-between rounded-xl bg-white p-3.5 shadow-sm border border-[var(--border)] animate-fade-up stagger-${Math.min(i + 1, 6)}`}>
             <span className="text-sm font-semibold text-[var(--text)] truncate">{u.username}</span>
             <Link
               href={`/m/s/${u.id}`}
-              className="btn btn-primary touch-btn shrink-0 rounded-xl px-4 py-2 text-xs font-bold"
+              className="btn btn-primary touch-btn shrink-0 rounded-xl px-4 py-2 text-xs font-bold border border-[var(--gold-dark)]/20"
             >
               查看宝箱
             </Link>

@@ -86,7 +86,7 @@ export default function RegisterPage() {
           </div>
           <div className="relative">
             <input
-              className="input h-12 pr-[54px]"
+              className="input h-24 pr-[54px]"
               placeholder="再次输入密码"
               type={showPwd2 ? "text" : "password"}
               value={password2} onChange={(e) => setPassword2(e.target.value)}
@@ -98,7 +98,7 @@ export default function RegisterPage() {
           <div className="flex justify-center w-full">
             <button
               disabled={loading}
-              className={`btn h-12 text-base font-bold tracking-widest disabled:opacity-50 ${
+              className={`btn h-24 text-lg font-bold tracking-wider disabled:opacity-50 ${
                 isS
                   ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-md shadow-blue-200"
                   : "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-200"

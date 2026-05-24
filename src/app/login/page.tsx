@@ -42,7 +42,7 @@ export default function LoginPage() {
           />
           <div className="relative">
             <input
-              className="input h-12 pr-[54px]"
+              className="input h-24 pr-[54px]"
               placeholder="密码"
               type={showPwd ? "text" : "password"}
               value={password}
@@ -53,7 +53,7 @@ export default function LoginPage() {
           <div className="flex justify-center w-full">
             <button
               disabled={loading}
-              className="btn btn-primary h-12 text-base font-bold tracking-widest disabled:opacity-50"
+              className="btn btn-primary h-24 text-lg font-bold tracking-wider disabled:opacity-50"
               style={{ width: '50%' }}
               onClick={async () => {
                 setError(null); setLoading(true);

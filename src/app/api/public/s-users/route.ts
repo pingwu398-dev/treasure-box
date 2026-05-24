@@ -10,11 +10,11 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const query = (url.searchParams.get("query") ?? "").trim();
 
+  const where: any = { role: ROLE.S };
+  if (query) where.username = { contains: query };
+
   const users = await prisma.user.findMany({
-    where: {
-      role: ROLE.S,
-      username: query ? { contains: query } : undefined,
-    },
+    where,
     orderBy: { username: "asc" },
     take: 50,
     select: { id: true, username: true },

@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { EyeToggle } from "@/components/EyeToggle";
 
 export default function LoginPage() {
   const params = useSearchParams();
@@ -47,13 +48,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button
-              type="button"
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 text-lg opacity-50 hover:opacity-100 transition"
-              onClick={() => setShowPwd(!showPwd)}
-            >
-              {showPwd ? "🙈" : "👁"}
-            </button>
+            <EyeToggle showing={showPwd} onClick={() => setShowPwd(!showPwd)} />
           </div>
           <button
             disabled={loading}

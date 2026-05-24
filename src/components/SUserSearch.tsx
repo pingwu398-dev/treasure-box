@@ -9,14 +9,13 @@ export function SUserSearch() {
   const [query, setQuery] = useState("");
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(false);
-  const [touched, setTouched] = useState(false);
 
   useEffect(() => {
-    if (!query.trim()) { setItems([]); return; }
-    setTouched(true);
     let cancelled = false;
     setLoading(true);
-    fetch(`/api/public/s-users?query=${encodeURIComponent(query)}`)
+    const params = new URLSearchParams();
+    if (query.trim()) params.set("query", query.trim());
+    fetch(`/api/public/s-users?${params.toString()}`)
       .then((r) => r.json())
       .then((d) => { if (cancelled) return; setItems(Array.isArray(d?.users) ? d.users : []); })
       .finally(() => { if (cancelled) return; setLoading(false); });
@@ -36,8 +35,10 @@ export function SUserSearch() {
       </div>
       <div className="space-y-2">
         {loading && <div className="flex items-center justify-center rounded-xl bg-white px-4 py-8 text-xs text-[var(--text-light)]">搜索中…</div>}
-        {!loading && touched && query && items.length === 0 && (
-          <div className="flex items-center justify-center rounded-xl bg-white px-4 py-8 text-xs text-[var(--text-light)]">没有找到用户</div>
+        {!loading && items.length === 0 && (
+          <div className="flex flex-col items-center rounded-xl bg-white px-4 py-8 text-xs text-[var(--text-light)]">
+            {query ? "没有找到用户" : "还没有写宝箱的用户"}
+          </div>
         )}
         {items.map((u, i) => (
           <div key={u.id} className={`flex items-center justify-between rounded-xl bg-white p-3.5 shadow-sm border border-[var(--border-light)] animate-fade-up stagger-${Math.min(i + 1, 6)}`}>

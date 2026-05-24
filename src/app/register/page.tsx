@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { EyeToggle } from "@/components/EyeToggle";
 
 export default function RegisterPage() {
   const [role, setRole] = useState<"S" | "M">("S");
@@ -15,16 +16,6 @@ export default function RegisterPage() {
 
   const icon = role === "S" ? "📦" : "🔑";
   const isS = role === "S";
-
-  const EyeBtn = (props: { showing: boolean; onClick: () => void }) => (
-    <button
-      type="button"
-      className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 text-lg opacity-50 hover:opacity-100 transition"
-      onClick={props.onClick}
-    >
-      {props.showing ? "🙈" : "👁"}
-    </button>
-  );
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-[var(--bg)] px-6">
@@ -47,7 +38,7 @@ export default function RegisterPage() {
         {result && <div className="mb-4 animate-scale-in rounded-xl bg-emerald-50 px-4 py-3 text-center text-sm font-medium text-green-600">{result}</div>}
 
         <div className="space-y-3.5">
-          {/* Role selector - compact cards */}
+          {/* Role selector */}
           <div className="flex gap-3">
             <button
               className={`flex flex-1 flex-col items-center gap-0.5 rounded-2xl py-3.5 text-sm font-bold transition-all ${
@@ -91,7 +82,7 @@ export default function RegisterPage() {
               type={showPwd ? "text" : "password"}
               value={password} onChange={(e) => setPassword(e.target.value)}
             />
-            <EyeBtn showing={showPwd} onClick={() => setShowPwd(!showPwd)} />
+            <EyeToggle showing={showPwd} onClick={() => setShowPwd(!showPwd)} />
           </div>
           <div className="relative">
             <input
@@ -100,10 +91,10 @@ export default function RegisterPage() {
               type={showPwd2 ? "text" : "password"}
               value={password2} onChange={(e) => setPassword2(e.target.value)}
             />
-            <EyeBtn showing={showPwd2} onClick={() => setShowPwd2(!showPwd2)} />
+            <EyeToggle showing={showPwd2} onClick={() => setShowPwd2(!showPwd2)} />
           </div>
 
-          {/* Register button - large */}
+          {/* Register button */}
           <button
             disabled={loading}
             className={`btn w-full rounded-xl py-[14px] text-base font-bold tracking-wider disabled:opacity-50 ${
@@ -125,7 +116,7 @@ export default function RegisterPage() {
           >{loading ? "注册中…" : "注 册"}</button>
         </div>
 
-        {/* Login link - pill style */}
+        {/* Login link */}
         <div className="mt-11 text-center">
           <a
             href="/login"

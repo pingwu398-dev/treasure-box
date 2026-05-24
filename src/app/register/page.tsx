@@ -69,7 +69,7 @@ export default function RegisterPage() {
           {/* Inputs */}
           <div className="relative w-1/2">
             <input
-              className="input w-full h-10 px-4 pl-[38px]"
+              className="input w-full h-10 pl-[38px]"
               placeholder="取个名字"
               value={username} onChange={(e) => setUsername(e.target.value)}
             />
@@ -77,7 +77,7 @@ export default function RegisterPage() {
           </div>
           <div className="relative w-1/2">
             <input
-              className="input w-full h-10 px-4 pr-[54px]"
+              className="input w-full h-10 pr-[54px]"
               placeholder="至少6位密码"
               type={showPwd ? "text" : "password"}
               value={password} onChange={(e) => setPassword(e.target.value)}
@@ -86,7 +86,7 @@ export default function RegisterPage() {
           </div>
           <div className="relative w-1/2">
             <input
-              className="input w-full h-10 px-4 pr-[54px]"
+              className="input w-full h-10 pr-[54px]"
               placeholder="再次输入密码"
               type={showPwd2 ? "text" : "password"}
               value={password2} onChange={(e) => setPassword2(e.target.value)}
@@ -97,7 +97,7 @@ export default function RegisterPage() {
           {/* Register button */}
           <button
             disabled={loading}
-            className={`btn mx-auto w-1/2 h-10 text-sm font-bold tracking-widest disabled:opacity-50 ${
+            className={`btn mx-auto w-1/2 py-3 text-base font-bold tracking-widest disabled:opacity-50 ${
               isS
                 ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-md shadow-blue-200"
                 : "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-200"

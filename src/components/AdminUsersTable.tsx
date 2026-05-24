@@ -35,7 +35,7 @@ export function AdminUsersTable(props: { initialUsers: UserRow[] }) {
 
       <div className="relative">
         <input
-          className="input px-4 py-5 pl-[34px] text-sm"
+          className="input pl-[34px] text-sm"
           placeholder="搜索用户名…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}

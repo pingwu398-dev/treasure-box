@@ -35,14 +35,14 @@ export default function LoginPage() {
         {/* Form */}
         <div className="space-y-4 flex flex-col items-center">
           <input
-            className="input mx-auto w-1/2 h-10 px-4"
+            className="input mx-auto w-1/2 h-10"
             placeholder="用户名"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <div className="relative mx-auto w-1/2">
             <input
-              className="input w-full h-10 px-4 pr-[54px]"
+              className="input w-full h-10 pr-[54px]"
               placeholder="密码"
               type={showPwd ? "text" : "password"}
               value={password}
@@ -52,7 +52,7 @@ export default function LoginPage() {
           </div>
           <button
             disabled={loading}
-            className="btn btn-primary mx-auto w-1/2 h-10 text-sm font-bold tracking-widest disabled:opacity-50"
+            className="btn btn-primary mx-auto w-1/2 py-3 text-base font-bold tracking-widest disabled:opacity-50"
             onClick={async () => {
               setError(null); setLoading(true);
               const res = await fetch("/api/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ username, password }) });

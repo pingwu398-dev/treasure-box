@@ -47,7 +47,7 @@ export default function OpenedFeedPage() {
         {/* Search */}
         <div className="flex gap-2">
           <input
-            className="input flex-1 px-3 py-5 text-sm"
+            className="input flex-1 text-sm"
             placeholder="🔍 S 用户名"
             value={ownerQuery}
             onChange={(e) => setOwnerQuery(e.target.value)}

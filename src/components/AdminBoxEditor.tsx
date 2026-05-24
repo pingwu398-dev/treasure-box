@@ -29,7 +29,7 @@ export function AdminBoxEditor(props: { boxId: string; initialContentText: strin
       {error && <div className="animate-scale-in rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-500">{error}</div>}
       <div className="relative">
         <textarea
-          className={`input p-4 min-h-[220px] resize-none leading-relaxed ${props.disabled ? "opacity-60 cursor-not-allowed" : ""}`}
+          className={`input min-h-[220px] resize-none leading-relaxed ${props.disabled ? "opacity-60 cursor-not-allowed" : ""}`}
           disabled={props.disabled}
           placeholder="宝箱内容"
           value={contentText}

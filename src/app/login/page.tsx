@@ -13,26 +13,32 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   return (
-    <main className="flex min-h-screen flex-col justify-center bg-[#f8f6f2] px-5 pb-20 pt-12">
-      <div className="mx-auto w-full max-w-sm">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-[var(--bg)] px-5 pb-20 pt-12">
+      <div className="mx-auto w-full max-w-sm animate-fade-up">
         <div className="mb-10 text-center">
-          <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-[#e69a28] text-4xl shadow-lg shadow-amber-200">📦</div>
-          <h1 className="text-3xl font-extrabold text-stone-800 tracking-tight">宝箱系统</h1>
-          <p className="mt-2 text-lg text-stone-500">登录你的账号</p>
+          <div className="mx-auto mb-5 flex h-20 w-20 animate-float items-center justify-center rounded-[22px] bg-gradient-to-br from-[var(--gold)] to-[var(--gold-dark)] text-4xl shadow-lg shadow-[var(--gold-glow)]">
+            📦
+          </div>
+          <h1 className="text-[28px] font-extrabold tracking-tight text-[var(--text)]">欢迎回来</h1>
+          <p className="mt-2 text-base text-[var(--text-muted)]">登录你的宝箱账号</p>
         </div>
 
-        {error && <div className="mb-5 rounded-2xl bg-red-50 px-5 py-4 text-center text-lg font-medium text-red-700">{error}</div>}
+        {error && (
+          <div className="mb-5 animate-scale-in rounded-2xl bg-red-50 px-5 py-4 text-center text-base font-medium text-red-600">
+            {error}
+          </div>
+        )}
 
-        <div className="space-y-4">
+        <div className="space-y-3.5">
           <input
-            className="w-full rounded-2xl border border-stone-200 bg-white px-5 py-5 text-lg text-stone-800 placeholder-stone-400 outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
+            className="w-full rounded-2xl border border-[var(--border)] bg-white px-5 py-4 text-base text-[var(--text)] placeholder-[var(--text-light)] outline-none transition focus:border-[var(--gold)] focus:ring-4 focus:ring-[var(--gold-glow)]"
             placeholder="用户名"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <div className="relative">
             <input
-              className="w-full rounded-2xl border border-stone-200 bg-white px-5 py-5 pr-20 text-lg text-stone-800 placeholder-stone-400 outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white px-5 py-4 pr-20 text-base text-[var(--text)] placeholder-[var(--text-light)] outline-none transition focus:border-[var(--gold)] focus:ring-4 focus:ring-[var(--gold-glow)]"
               placeholder="密码"
               type={showPwd ? "text" : "password"}
               value={password}
@@ -40,7 +46,7 @@ export default function LoginPage() {
             />
             <button
               type="button"
-              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg bg-stone-100 px-3 py-1 text-sm text-stone-500"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-xl bg-[var(--bg)] px-3 py-1.5 text-sm font-medium text-[var(--text-muted)] transition hover:bg-[var(--border)]"
               onClick={() => setShowPwd(!showPwd)}
             >
               {showPwd ? "隐藏" : "查看"}
@@ -48,7 +54,7 @@ export default function LoginPage() {
           </div>
           <button
             disabled={loading}
-            className="w-full rounded-2xl bg-[#e69a28] py-5 text-xl font-extrabold text-white shadow-lg shadow-amber-200 active:bg-[#c47a10] disabled:opacity-50"
+            className="btn-gold w-full py-4 text-lg tracking-wide disabled:opacity-50"
             onClick={async () => {
               setError(null); setLoading(true);
               const res = await fetch("/api/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ username, password }) });
@@ -60,11 +66,11 @@ export default function LoginPage() {
           >{loading ? "登录中…" : "登 录"}</button>
         </div>
 
-        <div className="mt-6 text-center text-lg text-stone-500">
+        <div className="mt-8 text-center text-base text-[var(--text-muted)]">
           还没有账号？
         </div>
-        <div className="text-center">
-          <a className="font-extrabold text-[#e69a28]" href="/register">立即注册</a>
+        <div className="mt-1.5 text-center">
+          <a className="text-base font-bold text-[var(--gold)] transition hover:text-[var(--gold-dark)]" href="/register">立即注册 →</a>
         </div>
       </div>
     </main>

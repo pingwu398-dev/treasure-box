@@ -10,26 +10,28 @@ export function OpenBoxList(props: { boxes: Box[] }) {
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const action = async (b: Box) => {
+    setError(null); setLoadingId(b.id);
+    try {
+      const res = await fetch(`/api/m/boxes/${b.id}/open`, { method: "POST" });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) return setError(data?.error ?? "开箱失败");
+      router.push(`/m/open-result/${b.id}`); router.refresh();
+    } finally { setLoadingId(null); }
+  };
+
   return (
     <div className="space-y-3">
-      {error && <div className="rounded-xl bg-red-50 px-5 py-4 text-base text-red-700">{error}</div>}
+      {error && <div className="rounded-2xl bg-red-50 px-5 py-4 text-center text-sm font-medium text-red-600">{error}</div>}
       {props.boxes.map((b, idx) => (
-        <div key={b.id} className="flex items-center justify-between rounded-2xl bg-white p-5 shadow-sm border border-stone-200/60">
-          <span className="text-lg font-bold text-stone-800">
+        <div key={b.id} className={`flex items-center justify-between rounded-2xl bg-white p-4 shadow-sm border border-[var(--border-light)] animate-fade-up stagger-${Math.min(idx + 1, 6)}`}>
+          <span className="text-base font-bold text-[var(--text)]">
             {idx + 1} 宝箱  {new Date(b.createdAt).toLocaleDateString("zh-CN")}
           </span>
           <button
             disabled={loadingId !== null}
-            className="rounded-xl bg-[#e69a28] px-6 py-3 text-base font-bold text-white active:bg-[#c47a10] disabled:opacity-50"
-            onClick={async () => {
-              setError(null); setLoadingId(b.id);
-              try {
-                const res = await fetch(`/api/m/boxes/${b.id}/open`, { method: "POST" });
-                const data = await res.json().catch(() => ({}));
-                if (!res.ok) return setError(data?.error ?? "开箱失败");
-                router.push(`/m/open-result/${b.id}`); router.refresh();
-              } finally { setLoadingId(null); }
-            }}
+            className="btn-gold rounded-xl px-5 py-2.5 text-sm disabled:opacity-50"
+            onClick={() => action(b)}
           >{loadingId === b.id ? "开启中…" : "✨ 打开"}</button>
         </div>
       ))}

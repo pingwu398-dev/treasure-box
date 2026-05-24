@@ -17,9 +17,7 @@ export function AdminUsersTable(props: { initialUsers: UserRow[] }) {
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
 
-  const filtered = search.trim()
-    ? users.filter((u) => u.username.includes(search.trim()))
-    : users;
+  const filtered = search.trim() ? users.filter((u) => u.username.includes(search.trim())) : users;
 
   async function reload() {
     const res = await fetch("/api/admin/users");
@@ -33,28 +31,33 @@ export function AdminUsersTable(props: { initialUsers: UserRow[] }) {
 
   return (
     <div className="space-y-3">
-      {error && <div className="rounded-xl bg-red-50 px-5 py-4 text-base text-red-700">{error}</div>}
-      <input
-        className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-lg text-stone-800 placeholder-stone-400 outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
-        placeholder="🔍 搜索用户名"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <div className="overflow-auto rounded-2xl border border-stone-200">
-        <table className="w-full text-base">
-          <thead className="bg-stone-50">
-            <tr>
-              <th className="p-3 text-left font-semibold text-stone-600">用户名</th>
-              <th className="p-3 text-left font-semibold text-stone-600">角色</th>
-              <th className="p-3 text-left font-semibold text-stone-600">宝箱</th>
-              <th className="p-3 text-left font-semibold text-stone-600">钥匙</th>
-              <th className="p-3 text-left font-semibold text-stone-600">操作</th>
+      {error && <div className="rounded-2xl bg-red-50 px-5 py-4 text-sm font-medium text-red-600">{error}</div>}
+      <div className="relative">
+        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm">🔍</span>
+        <input
+          className="w-full rounded-2xl border border-[var(--border)] bg-white py-3.5 pl-10 pr-4 text-sm text-[var(--text)] placeholder-[var(--text-light)] outline-none transition focus:border-[var(--gold)] focus:ring-4 focus:ring-[var(--gold-glow)]"
+          placeholder="搜索用户名"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+      <div className="overflow-auto rounded-2xl border border-[var(--border-light)] bg-white">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-[var(--border-light)] bg-[var(--bg)]">
+              <th className="p-3 text-left font-bold text-[var(--text-muted)]">用户名</th>
+              <th className="p-3 text-left font-bold text-[var(--text-muted)]">角色</th>
+              <th className="p-3 text-left font-bold text-[var(--text-muted)]">宝箱</th>
+              <th className="p-3 text-left font-bold text-[var(--text-muted)]">钥匙</th>
+              <th className="p-3 text-left font-bold text-[var(--text-muted)]">操作</th>
             </tr>
           </thead>
           <tbody>
-            {filtered.map((u) => <Row key={u.id} user={u} onChanged={async () => { try { setError(null); await reload(); } catch (e: any) { setError(e.message); } }} onError={(m) => setError(m)} onLocal={(p) => updateLocal(u.id, p)} />)}
+            {filtered.map((u) => (
+              <Row key={u.id} user={u} onChanged={async () => { try { setError(null); await reload(); } catch (e: any) { setError(e.message); } }} onError={(m) => setError(m)} onLocal={(p) => updateLocal(u.id, p)} />
+            ))}
             {filtered.length === 0 && (
-              <tr><td colSpan={5} className="p-6 text-center text-stone-500">没有匹配的用户</td></tr>
+              <tr><td colSpan={5} className="p-6 text-center text-sm text-[var(--text-muted)]">没有匹配的用户</td></tr>
             )}
           </tbody>
         </table>
@@ -94,18 +97,18 @@ function Row(props: { user: UserRow; onChanged: () => Promise<void>; onError: (m
   const b = badge[props.user.role] ?? badge.S;
 
   return (
-    <tr className="border-t border-stone-100">
-      <td className="p-3 font-semibold text-stone-800 whitespace-nowrap">{props.user.username}</td>
-      <td className="p-3"><span className={`rounded-full px-2.5 py-1 text-sm font-medium ${b.cls}`}>{b.label}</span></td>
-      <td className="p-3 text-stone-600">{props.user.role === "S" ? props.user.boxCount : "-"}</td>
-      <td className="p-3 text-stone-600">{props.user.keyBalance}</td>
+    <tr className="border-b border-[var(--border-light)] last:border-0">
+      <td className="p-3 font-bold text-[var(--text)] whitespace-nowrap">{props.user.username}</td>
+      <td className="p-3"><span className={`badge ${b.cls}`}>{b.label}</span></td>
+      <td className="p-3 text-sm text-[var(--text-muted)]">{props.user.role === "S" ? props.user.boxCount : "-"}</td>
+      <td className="p-3 text-sm text-[var(--text-muted)]">{props.user.keyBalance}</td>
       <td className="p-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <input className="w-20 rounded-lg border border-stone-200 p-2 text-sm" placeholder="密码" value={password} onChange={(e) => setPassword(e.target.value)} />
-          <button className="rounded-lg border border-stone-300 px-3 py-2 text-sm font-medium text-stone-600 disabled:opacity-50" disabled={loading || password.length < 6} onClick={async () => { setLoading(true); try { await patch({ password }); setPassword(""); await props.onChanged(); } catch (e: any) { props.onError(e.message); } finally { setLoading(false); } }}>重置</button>
-          {props.user.role === "S" && (<><input className="w-14 rounded-lg border border-stone-200 p-2 text-sm text-center" value={boxCount} onChange={(e) => setBoxCount(e.target.value)} inputMode="numeric" /><button className="rounded-lg bg-[#e69a28] px-3 py-2 text-sm font-medium text-white disabled:opacity-50" disabled={loading} onClick={async () => { setLoading(true); try { await assignBoxes(); await props.onChanged(); } catch (e: any) { props.onError(e.message); } finally { setLoading(false); } }}>+宝箱</button></>)}
-          {props.user.role === "M" && (<><input className="w-16 rounded-lg border border-stone-200 p-2 text-sm text-center" value={keyDelta} onChange={(e) => setKeyDelta(e.target.value)} inputMode="numeric" /><button className="rounded-lg bg-[#e69a28] px-3 py-2 text-sm font-medium text-white disabled:opacity-50" disabled={loading} onClick={async () => { setLoading(true); try { await assignKeys(); await props.onChanged(); } catch (e: any) { props.onError(e.message); } finally { setLoading(false); } }}>钥匙</button></>)}
-          <button className="rounded-lg bg-red-50 px-3 py-2 text-sm font-medium text-red-600 disabled:opacity-50" disabled={loading} onClick={async () => { if (!window.confirm("确认删除？")) return; setLoading(true); try { await del(); await props.onChanged(); } catch (e: any) { props.onError(e.message); } finally { setLoading(false); } }}>删除</button>
+        <div className="flex flex-wrap items-center gap-1.5">
+          <input className="w-20 rounded-xl border border-[var(--border-light)] p-2 text-xs" placeholder="密码" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <button className="rounded-xl border border-[var(--border-light)] px-3 py-2 text-xs font-medium text-[var(--text-muted)] transition hover:bg-[var(--bg)] disabled:opacity-50" disabled={loading || password.length < 6} onClick={async () => { setLoading(true); try { await patch({ password }); setPassword(""); await props.onChanged(); } catch (e: any) { props.onError(e.message); } finally { setLoading(false); } }}>重置</button>
+          {props.user.role === "S" && (<><input className="w-12 rounded-xl border border-[var(--border-light)] p-2 text-xs text-center" value={boxCount} onChange={(e) => setBoxCount(e.target.value)} inputMode="numeric" /><button className="rounded-xl bg-gradient-to-br from-[var(--gold)] to-[var(--gold-dark)] px-3 py-2 text-xs font-bold text-white disabled:opacity-50" disabled={loading} onClick={async () => { setLoading(true); try { await assignBoxes(); await props.onChanged(); } catch (e: any) { props.onError(e.message); } finally { setLoading(false); } }}>+宝箱</button></>)}
+          {props.user.role === "M" && (<><input className="w-14 rounded-xl border border-[var(--border-light)] p-2 text-xs text-center" value={keyDelta} onChange={(e) => setKeyDelta(e.target.value)} inputMode="numeric" /><button className="rounded-xl bg-gradient-to-br from-[var(--gold)] to-[var(--gold-dark)] px-3 py-2 text-xs font-bold text-white disabled:opacity-50" disabled={loading} onClick={async () => { setLoading(true); try { await assignKeys(); await props.onChanged(); } catch (e: any) { props.onError(e.message); } finally { setLoading(false); } }}>钥匙</button></>)}
+          <button className="rounded-xl bg-red-50 px-3 py-2 text-xs font-medium text-red-500 transition hover:bg-red-100 disabled:opacity-50" disabled={loading} onClick={async () => { if (!window.confirm("确认删除？")) return; setLoading(true); try { await del(); await props.onChanged(); } catch (e: any) { props.onError(e.message); } finally { setLoading(false); } }}>删除</button>
         </div>
       </td>
     </tr>

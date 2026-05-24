@@ -33,28 +33,29 @@ export function AppHeader(props: { role: Role; username: string; title?: string 
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-stone-200/60 bg-[#f8f6f2]/95 backdrop-blur">
-      <div className="flex items-center justify-between px-5 py-3">
-        <Link href="/" className="text-xl font-extrabold tracking-tight text-stone-800">
-          宝箱
+    <header className="sticky top-0 z-50 border-b border-[var(--border-light)] bg-[var(--bg)]/95 backdrop-blur-lg">
+      <div className="mx-auto flex max-w-lg items-center justify-between px-5 py-3">
+        <Link href="/" className="flex items-center gap-2 text-lg font-extrabold tracking-tight text-[var(--text)]">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--gold)] to-[var(--gold-dark)] text-sm shadow-sm">📦</span>
+          <span>宝箱</span>
         </Link>
-        <span className="text-base font-semibold text-stone-700">
+        <span className="text-sm font-semibold text-[var(--text-muted)]">
           {props.title ?? ""}
         </span>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-stone-500">{props.username}</span>
-          <button onClick={logout} className="text-sm text-red-500">
+          <span className="text-sm font-medium text-[var(--text-light)]">{props.username}</span>
+          <button onClick={logout} className="rounded-lg px-2.5 py-1 text-sm font-medium text-red-400 transition hover:bg-red-50 hover:text-red-500">
             退出
           </button>
         </div>
       </div>
       {links.length > 0 && (
-        <div className="flex items-center gap-3 px-5 pb-2.5">
+        <div className="flex items-center gap-1 overflow-x-auto border-t border-[var(--border-light)] px-5 pb-2.5 pt-2 scrollbar-none">
           {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              className="rounded-lg px-3 py-1.5 text-sm font-medium text-stone-600 transition hover:bg-stone-100 hover:text-stone-800"
+              className="whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium text-[var(--text-muted)] transition hover:bg-white hover:text-[var(--text)]"
             >
               {l.label}
             </Link>

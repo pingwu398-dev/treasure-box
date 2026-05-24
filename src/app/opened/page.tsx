@@ -18,11 +18,7 @@ export default function OpenedFeedPage() {
   const [openerQuery, setOpenerQuery] = useState("");
 
   useEffect(() => {
-    fetch("/api/me")
-      .then((r) => r.json())
-      .then((d) => {
-        if (d?.ok && d?.user) setMe(d.user);
-      });
+    fetch("/api/me").then((r) => r.json()).then((d) => { if (d?.ok && d?.user) setMe(d.user); });
   }, []);
 
   useEffect(() => {
@@ -37,49 +33,48 @@ export default function OpenedFeedPage() {
   }, [ownerQuery, openerQuery]);
 
   return (
-    <div className="min-h-screen pb-4">
+    <div className="min-h-screen bg-[var(--bg)] pb-8">
       {me && <AppHeader role={me.role} username={me.username} title="已开广场" />}
       {!me && (
-        <header className="sticky top-0 z-50 border-b border-stone-200/60 bg-[#f8f6f2]/95 backdrop-blur">
-          <div className="flex items-center justify-between px-5 py-3">
-            <Link href="/" className="text-xl font-extrabold tracking-tight text-stone-800">宝箱</Link>
-            <span className="text-base font-semibold text-stone-700">🎰 已开广场</span>
-            <button onClick={async () => { await fetch("/api/logout", { method: "POST" }); window.location.href = "/login"; }} className="text-sm text-red-500">退出</button>
+        <header className="sticky top-0 z-50 border-b border-[var(--border-light)] bg-[var(--bg)]/95 backdrop-blur-lg">
+          <div className="mx-auto flex max-w-lg items-center justify-between px-5 py-3">
+            <span className="text-lg font-extrabold tracking-tight text-[var(--text)]">🎰 已开广场</span>
+            <button onClick={async () => { await fetch("/api/logout", { method: "POST" }); window.location.href = "/login"; }} className="text-sm font-medium text-red-400">退出</button>
           </div>
         </header>
       )}
-      <main className="mx-auto max-w-lg px-5 py-5 space-y-4">
+      <main className="mx-auto max-w-lg px-5 py-6 space-y-4">
         <div className="flex gap-3">
           <input
-            className="flex-1 rounded-2xl border border-stone-200 bg-white px-4 py-3 text-lg text-stone-800 placeholder-stone-400 outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
+            className="flex-1 rounded-2xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--text)] placeholder-[var(--text-light)] outline-none transition focus:border-[var(--gold)] focus:ring-4 focus:ring-[var(--gold-glow)]"
             placeholder="🔍 S 用户名"
             value={ownerQuery}
             onChange={(e) => setOwnerQuery(e.target.value)}
           />
           <input
-            className="flex-1 rounded-2xl border border-stone-200 bg-white px-4 py-3 text-lg text-stone-800 placeholder-stone-400 outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
+            className="flex-1 rounded-2xl border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--text)] placeholder-[var(--text-light)] outline-none transition focus:border-[var(--gold)] focus:ring-4 focus:ring-[var(--gold-glow)]"
             placeholder="🔑 M 用户名"
             value={openerQuery}
             onChange={(e) => setOpenerQuery(e.target.value)}
           />
         </div>
-        {loading && <div className="text-center text-lg text-stone-500">加载中…</div>}
+        {loading && <div className="flex items-center justify-center py-10 text-sm text-[var(--text-muted)]">加载中…</div>}
         {!loading && boxes.length === 0 && (
-          <div className="rounded-2xl bg-white px-6 py-12 text-center shadow-sm border border-stone-200/60">
-            <div className="text-5xl mb-4">📭</div>
-            <p className="text-lg font-medium text-stone-700">暂无已开宝箱</p>
+          <div className="flex flex-col items-center rounded-3xl bg-white px-6 py-16 text-center shadow-sm border border-[var(--border-light)]">
+            <div className="mb-4 text-6xl">📭</div>
+            <p className="text-lg font-bold text-[var(--text)]">暂无已开宝箱</p>
           </div>
         )}
-        {boxes.map((b) => (
-          <Link key={b.id} href={`/opened/${b.id}`} className="block rounded-2xl bg-white p-5 shadow-sm border border-stone-200/60 active:bg-stone-50">
+        {boxes.map((b, i) => (
+          <Link key={b.id} href={`/opened/${b.id}`} className={`block rounded-2xl bg-white p-5 shadow-sm border border-[var(--border-light)] transition hover:shadow-md hover:border-[var(--border)] animate-fade-up stagger-${Math.min(i + 1, 6)}`}>
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-lg font-bold text-stone-800">{b.ownerSUser?.username ?? "-"} 的宝箱</div>
-                <div className="mt-1 text-base text-stone-500">
+                <div className="text-base font-bold text-[var(--text)]">{b.ownerSUser?.username ?? "-"} 的宝箱</div>
+                <div className="mt-1 text-sm text-[var(--text-muted)]">
                   由 {b.openedByMUser?.username ?? "-"} 打开
                 </div>
               </div>
-              <span className="text-amber-500 text-xl">➤</span>
+              <span className="text-lg text-[var(--gold)]">➤</span>
             </div>
           </Link>
         ))}

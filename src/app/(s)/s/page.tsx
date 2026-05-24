@@ -14,28 +14,27 @@ export default async function SHomePage() {
     where: { ownerSUserId: me.id },
     orderBy: { createdAt: "asc" },
     select: {
-      id: true,
-      status: true,
-      contentText: true,
-      contentSnapshotAtOpen: true,
+      id: true, status: true, contentText: true, contentSnapshotAtOpen: true,
       openedByMUser: { select: { username: true } },
     },
   });
 
   return (
-    <div className="min-h-screen pb-4">
+    <div className="min-h-screen bg-[var(--bg)] pb-8">
       <AppHeader role={me.role} username={me.username} title="我的宝箱" />
-      <main className="mx-auto max-w-lg px-5 py-6 space-y-5">
-        <div className="mt-2">
-          <span className="text-base font-semibold text-stone-600">共 {boxes.length} 个宝箱</span>
+      <main className="mx-auto max-w-lg px-5 py-6">
+        <div className="mb-7 flex items-center justify-between">
+          <span className="text-sm font-semibold text-[var(--text-muted)]">
+            共 <span className="text-base text-[var(--text)]">{boxes.length}</span> 个宝箱
+          </span>
         </div>
 
-        <div className="space-y-8">
+        <div className="space-y-5">
           {boxes.length === 0 && (
-            <div className="rounded-2xl bg-white px-6 py-12 text-center shadow-sm border border-stone-200/60">
-              <div className="text-5xl mb-4">📭</div>
-              <p className="text-lg font-medium text-stone-700">暂无宝箱</p>
-              <p className="mt-2 text-base text-stone-500">请联系管理员分配</p>
+            <div className="flex flex-col items-center rounded-3xl bg-white px-6 py-16 text-center shadow-sm border border-[var(--border-light)] stagger-1 animate-fade-up">
+              <div className="mb-4 text-6xl animate-float">📭</div>
+              <p className="text-lg font-bold text-[var(--text)]">暂无宝箱</p>
+              <p className="mt-2 text-sm text-[var(--text-muted)]">请联系管理员分配</p>
             </div>
           )}
 
@@ -43,32 +42,30 @@ export default async function SHomePage() {
             const content = b.status === "OPENED" ? b.contentSnapshotAtOpen : b.contentText;
             const hasContent = content && content.trim().length > 0;
             return (
-              <div key={b.id} className="rounded-2xl bg-white p-5 shadow-sm border border-stone-200/60">
+              <div key={b.id} className={`rounded-2xl bg-white p-5 shadow-sm border border-[var(--border-light)] animate-fade-up stagger-${Math.min(idx + 1, 6)}`}>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xl font-bold text-stone-700">宝箱{idx + 1}</span>
-                    <span className={`rounded-full px-3 py-1 text-sm font-medium ${b.status === "OPENED" ? "bg-slate-100 text-slate-600" : b.status === "READY" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-lg font-bold text-[var(--text)]">宝箱{idx + 1}</span>
+                    <span className={`badge ${b.status === "OPENED" ? "bg-slate-100 text-slate-600" : b.status === "READY" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-600"}`}>
                       {b.status === "OPENED" ? "已开启" : b.status === "READY" ? "待开启" : "未填写"}
                     </span>
                     {b.status === "OPENED" && b.openedByMUser?.username && (
-                      <span className="text-base text-stone-500 ml-2">开启M {b.openedByMUser.username}</span>
+                      <span className="text-sm text-[var(--text-muted)]">· {b.openedByMUser.username}</span>
                     )}
                   </div>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3">
                     {b.status !== "OPENED" && (
-                      <Link href={`/s/boxes/${b.id}`} className="rounded-xl bg-[#e69a28] px-6 py-3 text-base font-bold text-white active:bg-[#c47a10]">
-                        编辑
-                      </Link>
+                      <Link href={`/s/boxes/${b.id}`} className="btn-gold rounded-xl px-5 py-2.5 text-sm">编辑</Link>
                     )}
                     {b.status === "OPENED" && (
-                      <Link href={`/opened/${b.id}`} className="rounded-xl bg-[#e69a28] px-6 py-3 text-base font-bold text-white active:bg-[#c47a10]">
-                        查看
-                      </Link>
+                      <Link href={`/opened/${b.id}`} className="btn-gold rounded-xl px-5 py-2.5 text-sm">查看</Link>
                     )}
-                    <span className="text-base text-stone-500">
-                      {hasContent ? `内容详情：${content}` : "无内容"}
-                    </span>
                   </div>
+                </div>
+                <div className="mt-3 pt-3 border-t border-[var(--border-light)]">
+                  <span className="text-sm text-[var(--text-muted)]">
+                    {hasContent ? content : "无内容"}
+                  </span>
                 </div>
               </div>
             );

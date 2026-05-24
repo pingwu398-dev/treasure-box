@@ -21,7 +21,7 @@ export default async function TreasureEditPage(props: { params: { boxId: string 
     <div className="min-h-screen pb-24">
       <AppHeader role={me.role} username={me.username} title="编辑宝箱" />
       <main className="mx-auto max-w-lg px-5 py-5">
-        <BoxEditor boxId={box.id} initialContentText={box.contentText ?? ""} />
+        <BoxEditor key={box.id} boxId={box.id} initialContentText={box.contentText ?? ""} />
       </main>
     </div>
   );

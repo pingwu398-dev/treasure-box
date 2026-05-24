@@ -95,14 +95,15 @@ export default function RegisterPage() {
           </div>
 
           {/* Register button */}
-          <div className="flex justify-center">
+          <div className="flex justify-center w-full">
             <button
               disabled={loading}
-              className={`btn w-1/2 h-12 text-base font-bold tracking-widest disabled:opacity-50 ${
+              className={`btn h-12 text-base font-bold tracking-widest disabled:opacity-50 ${
                 isS
                   ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-md shadow-blue-200"
                   : "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-200"
               }`}
+              style={{ width: '50%' }}
               onClick={async () => {
               setError(null); setResult(null);
               if (password.length < 6) { setError("密码至少 6 位"); return; }

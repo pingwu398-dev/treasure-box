@@ -50,10 +50,11 @@ export default function LoginPage() {
             />
             <EyeToggle showing={showPwd} onClick={() => setShowPwd(!showPwd)} />
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center w-full">
             <button
               disabled={loading}
-              className="btn btn-primary w-1/2 h-12 text-base font-bold tracking-widest disabled:opacity-50"
+              className="btn btn-primary h-12 text-base font-bold tracking-widest disabled:opacity-50"
+              style={{ width: '50%' }}
               onClick={async () => {
                 setError(null); setLoading(true);
                 const res = await fetch("/api/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ username, password }) });

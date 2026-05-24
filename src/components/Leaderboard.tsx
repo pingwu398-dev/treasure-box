@@ -17,7 +17,7 @@ export function Leaderboard(props: { type: "S" | "M" }) {
           raw.map((u: any) => ({
             id: u.id,
             username: u.username,
-            value: props.type === "M" ? u.keyBalance : u.boxCount,
+            value: props.type === "M" ? u.cumulativeKeys : u.boxCount,
           })),
         );
       })
@@ -25,7 +25,7 @@ export function Leaderboard(props: { type: "S" | "M" }) {
   }, [props.type]);
 
   const medal = (i: number) => (i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : "");
-  const label = props.type === "M" ? "🔑 钥匙排行" : "📦 宝箱排行";
+  const label = props.type === "M" ? "🔑 累计钥匙排行" : "📦 宝箱排行";
 
   return (
     <div className="rounded-2xl bg-white p-5 shadow-sm border border-stone-200/60 space-y-3">

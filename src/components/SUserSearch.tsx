@@ -26,7 +26,7 @@ export function SUserSearch() {
         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl">🔍</span>
         <input
           className="w-full rounded-2xl border border-stone-200 bg-white py-4 pl-12 pr-4 text-lg text-stone-800 placeholder-stone-400 outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-100"
-          placeholder="搜索 S 用户名"
+          placeholder="搜索用户名"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />

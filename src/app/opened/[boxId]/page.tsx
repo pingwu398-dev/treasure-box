@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
 import { AppHeader } from "@/components/AppHeader";
+import { LocalTime } from "@/components/LocalTime";
 
 export default async function OpenedDetailPage(props: { params: { boxId: string } }) {
   const me = await getCurrentUser();

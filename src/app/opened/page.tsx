@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
 import { AppHeader } from "@/components/AppHeader";
+import { LocalTime } from "@/components/LocalTime";
 
 export default async function OpenedFeedPage() {
   const me = await getCurrentUser();
@@ -37,7 +38,7 @@ export default async function OpenedFeedPage() {
               <div className="flex-1">
                 <div className="text-lg font-bold text-stone-800">{b.ownerSUser?.username ?? "-"} 的宝箱</div>
                 <div className="mt-1 text-base text-stone-500">
-                  由 {b.openedByMUser?.username ?? "-"} 打开 · {b.openedAt ? b.openedAt.toLocaleString("zh-CN") : "-"}
+                  由 {b.openedByMUser?.username ?? "-"} 打开 · {b.openedAt ? <LocalTime date={b.openedAt.toISOString()} /> : "-"}
                 </div>
               </div>
               <span className="text-amber-500 text-xl">➤</span>

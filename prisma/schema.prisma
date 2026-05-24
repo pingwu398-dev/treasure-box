@@ -25,6 +25,7 @@ model User {
   passwordHash String
   role         Role
   keyBalance   Int      @default(0)
+  totalKeysEarned Int  @default(0)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

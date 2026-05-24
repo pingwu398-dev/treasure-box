@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
 import { AppHeader } from "@/components/AppHeader";
+import { LocalTime } from "@/components/LocalTime";
 import { ROLE } from "@/lib/roles";
 
 export default async function OpenResultPage(props: { params: { boxId: string } }) {
@@ -27,7 +28,7 @@ export default async function OpenResultPage(props: { params: { boxId: string } 
           <div className="text-6xl mb-4">🎉</div>
           <h1 className="text-2xl font-extrabold text-stone-800">恭喜打开宝箱！</h1>
           <p className="mt-2 text-base text-stone-500">
-            {box.openedByMUser?.username ?? "-"} · {box.openedAt ? box.openedAt.toLocaleString("zh-CN") : "-"}
+            {box.openedByMUser?.username ?? "-"} · {box.openedAt ? <LocalTime date={box.openedAt.toISOString()} /> : "-"}
           </p>
         </div>
         <div className="rounded-2xl border-2 border-amber-300 bg-gradient-to-b from-amber-50 to-white p-6 shadow-lg">

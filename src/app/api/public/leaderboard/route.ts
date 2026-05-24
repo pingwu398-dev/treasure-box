@@ -13,11 +13,16 @@ export async function GET(req: Request) {
   if (type === "M") {
     const users = await prisma.user.findMany({
       where: { role: ROLE.M },
-      orderBy: { keyBalance: "desc" },
+      orderBy: { totalKeysEarned: "desc" },
       take: 10,
-      select: { id: true, username: true, keyBalance: true },
+      select: { id: true, username: true, totalKeysEarned: true },
     });
-    return NextResponse.json({ ok: true, list: users, type: "M" });
+    const list = users.map((u) => ({
+      id: u.id,
+      username: u.username,
+      cumulativeKeys: u.totalKeysEarned,
+    }));
+    return NextResponse.json({ ok: true, list, type: "M" });
   }
 
   if (type === "S") {

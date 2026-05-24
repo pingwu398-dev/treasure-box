@@ -61,7 +61,7 @@ export default function RegisterPage() {
               className={`flex-1 rounded-2xl py-5 text-lg font-extrabold transition-all ${
                 role === "M"
                   ? "bg-emerald-50 border-2 border-emerald-400 text-emerald-700 shadow-sm shadow-emerald-100 scale-105"
-                  : "bg-white border border-stone-200 text-stone-400 hover:bg-stone-50"
+                  : "bg-white border border-stone-200 text-stone-300 hover:bg-stone-50"
               }`}
               onClick={() => setRole("M")}
             >

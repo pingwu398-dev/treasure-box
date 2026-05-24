@@ -4,6 +4,7 @@ import { AdminBoxEditor } from "@/components/AdminBoxEditor";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
 import { AppHeader } from "@/components/AppHeader";
+import { LocalTime } from "@/components/LocalTime";
 import { ROLE } from "@/lib/roles";
 
 export default async function AdminBoxDetailPage(props: { params: { boxId: string } }) {

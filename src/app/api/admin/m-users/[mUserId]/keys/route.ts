@@ -25,7 +25,10 @@ export async function POST(req: Request, ctx: { params: { mUserId: string } }) {
   const nextBalance = Math.max(0, user.keyBalance + parsed.data.delta);
   const updated = await prisma.user.update({
     where: { id: user.id },
-    data: { keyBalance: nextBalance },
+    data: {
+      keyBalance: nextBalance,
+      totalKeysEarned: parsed.data.delta > 0 ? { increment: parsed.data.delta } : undefined,
+    },
     select: { id: true, keyBalance: true },
   });
 

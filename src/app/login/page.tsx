@@ -50,18 +50,20 @@ export default function LoginPage() {
             />
             <EyeToggle showing={showPwd} onClick={() => setShowPwd(!showPwd)} />
           </div>
-          <button
-            disabled={loading}
-            className="btn btn-primary w-full h-12 text-base font-bold tracking-widest disabled:opacity-50"
-            onClick={async () => {
-              setError(null); setLoading(true);
-              const res = await fetch("/api/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ username, password }) });
-              const data = await res.json().catch(() => ({}));
-              setLoading(false);
-              if (!res.ok) return setError(data?.error ?? "登录失败");
-              window.location.href = next;
-            }}
-          >{loading ? "登录中…" : "登 录"}</button>
+          <div className="flex justify-center">
+            <button
+              disabled={loading}
+              className="btn btn-primary w-1/2 h-12 text-base font-bold tracking-widest disabled:opacity-50"
+              onClick={async () => {
+                setError(null); setLoading(true);
+                const res = await fetch("/api/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ username, password }) });
+                const data = await res.json().catch(() => ({}));
+                setLoading(false);
+                if (!res.ok) return setError(data?.error ?? "登录失败");
+                window.location.href = next;
+              }}
+            >{loading ? "登录中…" : "登 录"}</button>
+          </div>
         </div>
 
         {/* Register link - pill style */}

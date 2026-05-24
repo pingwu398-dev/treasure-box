@@ -95,14 +95,15 @@ export default function RegisterPage() {
           </div>
 
           {/* Register button */}
-          <button
-            disabled={loading}
-            className={`btn w-full h-12 text-base font-bold tracking-widest disabled:opacity-50 ${
-              isS
-                ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-md shadow-blue-200"
-                : "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-200"
-            }`}
-            onClick={async () => {
+          <div className="flex justify-center">
+            <button
+              disabled={loading}
+              className={`btn w-1/2 h-12 text-base font-bold tracking-widest disabled:opacity-50 ${
+                isS
+                  ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-md shadow-blue-200"
+                  : "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-200"
+              }`}
+              onClick={async () => {
               setError(null); setResult(null);
               if (password.length < 6) { setError("密码至少 6 位"); return; }
               if (password !== password2) { setError("两次密码不一致"); return; }
@@ -114,7 +115,8 @@ export default function RegisterPage() {
               setResult("✅ 注册成功！请去登录。");
             }}
           >{loading ? "注册中…" : "注 册"}</button>
-        </div>
+            </div>
+          </div>
 
         {/* Login link */}
         <div className="mt-10 text-center">

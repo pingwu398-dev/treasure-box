@@ -22,7 +22,6 @@ export function OpenBoxList(props: { boxes: Box[] }) {
             disabled={loadingId !== null}
             className="rounded-xl bg-[#e69a28] px-6 py-3 text-base font-bold text-white active:bg-[#c47a10] disabled:opacity-50"
             onClick={async () => {
-              if (!window.confirm("确认打开？将消耗 1 把钥匙")) return;
               setError(null); setLoadingId(b.id);
               try {
                 const res = await fetch(`/api/m/boxes/${b.id}/open`, { method: "POST" });

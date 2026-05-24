@@ -36,7 +36,7 @@ export default async function AdminBoxDetailPage(props: { params: { boxId: strin
               {box.status === "OPENED" ? "已开" : box.status === "READY" ? "就绪" : "草稿"}
             </span>
           </div>
-          {box.openedAt && <div className="text-base text-stone-500">🕒 {box.openedAt.toLocaleString("zh-CN")}</div>}
+          {box.openedAt && <div className="text-base text-stone-500">🕒 <LocalTime date={box.openedAt.toISOString()} /></div>}
         </div>
         <AdminBoxEditor boxId={box.id} initialContentText={box.contentText ?? ""} disabled={disabled} />
         {disabled && <div className="rounded-xl bg-amber-50 px-5 py-4 text-base text-amber-700">🔒 已开宝箱锁定不可修改</div>}

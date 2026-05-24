@@ -27,7 +27,7 @@ export default async function OpenedDetailPage(props: { params: { boxId: string 
         <div className="rounded-2xl bg-white p-5 shadow-sm border border-stone-200/60">
           <div className="flex items-center gap-3 text-base text-stone-500 mb-4 pb-4 border-b border-stone-100">
             <span>🔑 {box.openedByMUser?.username ?? "-"}</span>
-            <span>🕒 {box.openedAt ? box.openedAt.toLocaleString("zh-CN") : "-"}</span>
+            <span>🕒 {box.openedAt ? <LocalTime date={box.openedAt.toISOString()} /> : "-"}</span>
           </div>
           <div className="whitespace-pre-wrap text-lg leading-relaxed text-stone-800">
             {box.contentSnapshotAtOpen ?? ""}

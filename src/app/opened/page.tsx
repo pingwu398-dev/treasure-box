@@ -33,9 +33,8 @@ export default async function OpenedFeedPage() {
         )}
         {boxes.map((b) => (
           <Link key={b.id} href={`/opened/${b.id}`} className="block rounded-2xl bg-white p-5 shadow-sm border border-stone-200/60 active:bg-stone-50">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 text-2xl">📦</div>
-              <div className="flex-1">
+            <div className="flex items-center justify-between">
+              <div>
                 <div className="text-lg font-bold text-stone-800">{b.ownerSUser?.username ?? "-"} 的宝箱</div>
                 <div className="mt-1 text-base text-stone-500">
                   由 {b.openedByMUser?.username ?? "-"} 打开 · {b.openedAt ? <LocalTime date={b.openedAt.toISOString()} /> : "-"}

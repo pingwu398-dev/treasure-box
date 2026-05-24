@@ -5,6 +5,13 @@ import { prisma } from "@/lib/prisma";
 import { AppHeader } from "@/components/AppHeader";
 import { ROLE } from "@/lib/roles";
 
+const statusInfo = (status: string, hasContent: boolean) => {
+  if (status === "OPENED") return { label: "已开启", cls: "bg-slate-100 text-slate-600", text: "宝箱已打开" };
+  if (status === "READY") return { label: "待开启", cls: "bg-emerald-50 text-emerald-700", text: "宝箱已填写" };
+  if (hasContent) return { label: "草稿", cls: "bg-amber-50 text-amber-700", text: "宝箱已填写" };
+  return { label: "草稿", cls: "bg-stone-100 text-stone-600", text: "宝箱未被填写" };
+};
+
 export default async function SHomePage() {
   const me = await getCurrentUser();
   if (!me) redirect("/login");
@@ -33,31 +40,29 @@ export default async function SHomePage() {
             </div>
           )}
 
-          {boxes.map((b, idx) => (
-            <div key={b.id} className="rounded-2xl bg-white p-5 shadow-sm border border-stone-200/60">
-              <div className="flex items-start justify-between">
-                <div>
+          {boxes.map((b, idx) => {
+            const info = statusInfo(b.status, !!b.contentText);
+            return (
+              <div key={b.id} className="rounded-2xl bg-white p-5 shadow-sm border border-stone-200/60">
+                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <span className="text-xl font-bold text-stone-700">宝箱{idx + 1}</span>
-                    <span className="text-stone-500"> </span>
-                    {b.status === "OPENED" && <span className="text-base font-medium text-stone-500">宝箱已打开</span>}
-                    {b.status === "READY" && <span className="text-base font-medium text-stone-500">宝箱未被打开</span>}
-                    {b.status === "DRAFT" && <span className="text-base font-medium text-stone-500">宝箱未被填写</span>}
+                    <span className={`rounded-full px-3 py-1 text-sm font-medium ${info.cls}`}>{info.label}</span>
                   </div>
+                  {b.status !== "OPENED" && (
+                    <Link href={`/s/boxes/${b.id}`} className="rounded-xl bg-[#e69a28] px-6 py-3 text-base font-bold text-white active:bg-[#c47a10]">
+                      编辑
+                    </Link>
+                  )}
+                  {b.status === "OPENED" && (
+                    <Link href={`/opened/${b.id}`} className="rounded-xl border border-stone-300 px-5 py-3 text-base font-medium text-stone-600 active:bg-stone-50">
+                      查看
+                    </Link>
+                  )}
                 </div>
-                {b.status !== "OPENED" && (
-                  <Link href={`/s/boxes/${b.id}`} className="rounded-xl bg-[#e69a28] px-6 py-3 text-base font-bold text-white active:bg-[#c47a10]">
-                    编辑
-                  </Link>
-                )}
-                {b.status === "OPENED" && (
-                  <Link href={`/opened/${b.id}`} className="rounded-xl border border-stone-300 px-5 py-3 text-base font-medium text-stone-600 active:bg-stone-50">
-                    查看
-                  </Link>
-                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </main>
     </div>

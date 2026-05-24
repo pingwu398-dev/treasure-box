@@ -36,12 +36,7 @@ export function SUserSearch() {
         {!loading && query && items.length === 0 && <div className="rounded-xl bg-white px-6 py-8 text-center text-lg text-stone-500">没有匹配的用户</div>}
         {items.map((u) => (
           <div key={u.id} className="flex items-center justify-between rounded-2xl bg-white p-5 shadow-sm border border-stone-200/60">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 text-xl font-bold text-amber-700">
-                {u.username.charAt(0)}
-              </div>
-              <span className="text-lg font-bold text-stone-800">{u.username}</span>
-            </div>
+            <span className="text-lg font-bold text-stone-800">{u.username}</span>
             <Link href={`/m/s/${u.id}`} className="rounded-xl bg-[#e69a28] px-6 py-3 text-base font-bold text-white active:bg-[#c47a10]">
               查看宝箱
             </Link>

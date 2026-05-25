@@ -53,7 +53,7 @@ export default function LoginPage() {
           <div className="flex justify-center w-full">
             <button
               disabled={loading}
-              className="btn btn-primary h-24 text-lg font-bold tracking-wider disabled:opacity-50"
+              className="btn btn-primary h-48 text-xl font-bold tracking-wider disabled:opacity-50"
               style={{ width: '50%' }}
               onClick={async () => {
                 setError(null); setLoading(true);

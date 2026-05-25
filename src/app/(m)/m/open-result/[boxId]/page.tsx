@@ -18,7 +18,7 @@ export default async function OpenResultPage(props: { params: { boxId: string } 
       openedByMUser: { select: { username: true } },
     },
   });
-  if (!box || box.status !== "OPENED") redirect("/m");
+  if (!box || (box.status !== "OPENED" && box.status !== "REDEEMED")) redirect("/m");
 
   return (
     <div className="min-h-screen bg-[var(--bg)] pb-8">

@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   const ownerUsername = (url.searchParams.get("ownerUsername") ?? "").trim();
   const openerUsername = (url.searchParams.get("openerUsername") ?? "").trim();
 
-  const where: any = { status: "OPENED" };
+  const where: any = { status: { in: ["OPENED", "REDEEMED"] } };
 
   if (ownerUsername) {
     const ownerUsers = await prisma.user.findMany({
@@ -33,7 +33,7 @@ export async function GET(req: Request) {
     orderBy: { openedAt: "desc" },
     take: 100,
     select: {
-      id: true, openedAt: true, contentSnapshotAtOpen: true,
+      id: true, status: true, openedAt: true, contentSnapshotAtOpen: true,
       ownerSUser: { select: { username: true } },
       openedByMUser: { select: { username: true } },
     },

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { AppHeader } from "@/components/AppHeader";
 
 type Box = {
-  id: string; openedAt: string; contentSnapshotAtOpen: string | null;
+  id: string; status: string; openedAt: string; contentSnapshotAtOpen: string | null;
   ownerSUser: { username: string } | null;
   openedByMUser: { username: string } | null;
 };
@@ -71,11 +71,15 @@ export default function OpenedFeedPage() {
         <div className="space-y-2.5">
           {boxes.map((b, i) => (
             <Link key={b.id} href={`/opened/${b.id}`} className={`flex items-center justify-between rounded-xl bg-white p-3.5 shadow-sm border border-[var(--border-light)] transition hover:shadow-md active:scale-[0.99] animate-fade-up stagger-${Math.min(i + 1, 6)}`}>
-              <div className="min-w-0">
-                <div className="text-sm font-semibold text-[var(--text)]">{b.ownerSUser?.username ?? "-"} 的宝箱</div>
-                <div className="mt-0.5 text-[11px] text-[var(--text-light)]">
-                  由 {b.openedByMUser?.username ?? "-"} 打开
-                </div>
+              <div className="min-w-0 flex items-center gap-2">
+                <span className="text-xs text-[var(--text-muted)]">
+                  {b.ownerSUser?.username ?? "-"} · {b.openedByMUser?.username ?? "-"}
+                </span>
+                {b.status === "REDEEMED" ? (
+                  <span className="badge bg-green-100 text-green-700">已兑现</span>
+                ) : (
+                  <span className="badge bg-slate-100 text-slate-500">未兑现</span>
+                )}
               </div>
               <span className="text-base text-[var(--text-faint)] shrink-0 ml-2">›</span>
             </Link>

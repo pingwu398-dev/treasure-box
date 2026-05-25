@@ -12,7 +12,7 @@ export default async function MyOpenedPage() {
   if (me.role !== ROLE.M) redirect("/");
 
   const boxes = await prisma.treasureBox.findMany({
-    where: { openedByMUserId: me.id, status: "OPENED" },
+    where: { openedByMUserId: me.id, status: { in: ["OPENED", "REDEEMED"] } },
     orderBy: { openedAt: "desc" },
     take: 100,
     select: {

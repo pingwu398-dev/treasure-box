@@ -17,6 +17,7 @@ enum BoxStatus {
   DRAFT
   READY
   OPENED
+  REDEEMED
 }
 
 model User {

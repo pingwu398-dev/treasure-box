@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
 import { AppHeader } from "@/components/AppHeader";
+import { RedeemBtn } from "@/components/RedeemBtn";
 import { ROLE } from "@/lib/roles";
 
 export default async function SHomePage() {
@@ -19,7 +20,7 @@ export default async function SHomePage() {
     },
   });
 
-  const todoCount = boxes.filter((b) => b.status !== "OPENED").length;
+  const todoCount = boxes.filter((b) => b.status !== "OPENED" && b.status !== "REDEEMED").length;
 
   return (
     <div className="min-h-screen bg-[var(--bg)] pb-8">
@@ -46,7 +47,7 @@ export default async function SHomePage() {
         {/* Box list */}
         <div className="space-y-3">
           {boxes.map((b, idx) => {
-            const content = b.status === "OPENED" ? b.contentSnapshotAtOpen : b.contentText;
+            const content = b.status === "OPENED" || b.status === "REDEEMED" ? b.contentSnapshotAtOpen : b.contentText;
             const hasContent = content && content.trim().length > 0;
 
             return (
@@ -57,20 +58,24 @@ export default async function SHomePage() {
                     <span className="text-sm font-bold text-[var(--text)] shrink-0">宝箱{idx + 1}</span>
                     <span className={`badge ${
                       b.status === "OPENED" ? "status-open" :
+                      b.status === "REDEEMED" ? "bg-emerald-50 text-emerald-700" :
                       b.status === "READY" ? "status-ready" : "status-draft"
                     }`}>
                       {b.status === "OPENED" ? "已开启" :
+                       b.status === "REDEEMED" ? "已兑现" :
                        b.status === "READY" ? "待开启" : "未填写"}
                     </span>
-                    {b.status === "OPENED" && b.openedByMUser?.username && (
+                    {(b.status === "OPENED" || b.status === "REDEEMED") && b.openedByMUser?.username && (
                       <span className="text-[11px] text-[var(--text-light)] truncate">· {b.openedByMUser.username}</span>
                     )}
                   </div>
-                  <div className="shrink-0 ml-2">
-                    {b.status !== "OPENED" ? (
+                  <div className="shrink-0 ml-2 flex items-center gap-2">
+                    {b.status !== "OPENED" && b.status !== "REDEEMED" ? (
                       <Link href={`/s/boxes/${b.id}`} className="btn btn-primary touch-btn rounded-xl px-4 py-2 text-xs">编辑</Link>
-                    ) : (
+                    ) : b.status === "REDEEMED" ? (
                       <Link href={`/opened/${b.id}`} className="btn btn-secondary touch-btn rounded-xl px-4 py-2 text-xs">查看</Link>
+                    ) : (
+                      <RedeemBtn boxId={b.id} />
                     )}
                   </div>
                 </div>
